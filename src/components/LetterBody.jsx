@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import dummy from "assets/fakedata.json";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const LetterBody = () => {
   // 값이 변동이 있는 변수들은  useState로 보관하기

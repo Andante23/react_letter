@@ -1,7 +1,13 @@
-import React from "react";
+import { LetterHeader } from "components/LetterHeader";
+import { LetterBody } from "components/LetterBody";
 
 const Home = () => {
-  return <div>Home 페이지</div>;
+  return (
+    <>
+      <LetterHeader></LetterHeader>
+      <LetterBody></LetterBody>
+    </>
+  );
 };
 
 export default Home;

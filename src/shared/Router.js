@@ -8,6 +8,9 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="detail" element={<Detail />} />
+
+        {/* 동적라우팅 */}
+        <Route path="detail/:id" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );

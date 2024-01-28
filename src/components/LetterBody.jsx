@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import dummy from "assets/fakedata.json";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const LetterBody = () => {
-  // 값이 변동이 있는 변수들은  useState로 보관하기
-  const [nickName, setNickName] = useState("");
-  const [content, setContent] = useState("");
-  const [selectValue, setSelectorValue] = useState("최정훈");
-  const [letterData, setLetterData] = useState(dummy);
+export const LetterBody = ({
+  nickName,
+  setNickName,
+  content,
+  setContent,
+  selectValue,
+  setSelectorValue,
+  letterData,
+  setLetterData,
+}) => {
+  const navigate = useNavigate();
 
   /**
    * 입력 nickName 값 저장하는 함수
@@ -34,6 +38,7 @@ export const LetterBody = () => {
   /**
    *  입력폼을 제출하는 함수
    */
+
   const onSubmitInputForm = (event) => {
     event.preventDefault();
 
@@ -51,14 +56,15 @@ export const LetterBody = () => {
         id: uuidv4(),
       },
     ]);
-
-    setContent("");
-    setNickName("");
   };
 
   const onClickArtistViewPostButton = (artistName) => {
     setSelectorValue(artistName);
   };
+
+  const ref = useRef("");
+  console.log(ref);
+  console.log(ref.current);
 
   return (
     <>
@@ -103,9 +109,16 @@ export const LetterBody = () => {
             <img src={lD.avatar} alt="" />
             <p>{lD.nickname}</p>
             <p>{lD.content}</p>
-            <Link to={`/detail/${lD.id}`}>
-              <span style={{ cursor: "pointer" }}>더 보기{lD.writedTo}</span>
-            </Link>
+
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                // Navigate to the detail page with state
+                navigate(`/detail/${lD.id}`, { state: { data: lD } });
+              }}
+            >
+              더 보기{lD.writedTo}
+            </span>
           </div>
         ))}
     </>

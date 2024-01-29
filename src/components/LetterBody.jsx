@@ -1,10 +1,8 @@
-import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import {
-  LetterForm,
-  LetterCard,
-  LetterPostViewButton,
-} from "Style/GlobalStyle";
+
+import { LetterCard, AddImageSize } from "Style/localStyle";
+import { LetterInputForm } from "./LetterInputForm";
+import { ArtistsPostViewButton } from "./ArtistsPostViewButton";
 
 export const LetterBody = ({
   nickName,
@@ -18,126 +16,54 @@ export const LetterBody = ({
 }) => {
   const navigate = useNavigate();
 
-  /**
-   * 입력 nickName 값 저장하는 함수
-   */
-  const onChangeNickName = (event) => {
-    setNickName(event.target.value);
-  };
-
-  /**
-   * 입력 content 값 저장하는 함수
-   */
-  const onChangeContent = (event) => {
-    setContent(event.target.value);
-  };
-
-  /**
-   * selectBox에서 선택한 option 값을 저장하는 함수
-   */
-  const onChangeSelect = (event) => {
-    setSelectorValue(event.target.value);
-  };
-
-  /**
-   *  입력폼을 제출하는 함수
-   */
-
-  const onSubmitInputForm = (event) => {
-    event.preventDefault();
-
-    const date = new Date();
-
-    setLetterData((prevLetterData) => [
-      ...prevLetterData,
-      {
-        createdAt: date.toISOString(),
-        nickname: nickName,
-        avatar:
-          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: content,
-        writedTo: selectValue,
-        id: uuidv4(),
-      },
-    ]);
-  };
-
-  /**
-   *  최정훈 버튼을 클릭하면   최정훈에 부합하는 게시물을 보여주는 함수
-   */
-  const onClickArtistViewPostButton = (selectValue) => {
-    setSelectorValue(selectValue);
+  const imageStyleSize = {
+    width: "100px",
+    height: "100px",
   };
 
   return (
     <>
-      <LetterForm />
-      <form onSubmit={onSubmitInputForm}>
-        <input
-          type="text"
-          name="nickname"
-          value={nickName}
-          onChange={onChangeNickName}
-          placeholder="닉네임"
-          required
-        />
-        <input
-          type="text"
-          name="content"
-          value={content}
-          onChange={onChangeContent}
-          placeholder="내용"
-          required
-        />
+      <LetterInputForm
+        nickName={nickName}
+        setNickName={setNickName}
+        setContent={setContent}
+        content={content}
+        setLetterData={setLetterData}
+        selectValue={selectValue}
+        setSelectorValue={setSelectorValue}
+      />
 
-        <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
-          <option value="최정훈">최정훈</option>
-          <option value="김도형">김도형</option>
-        </select>
-        <button type="submit">추가하기</button>
-      </form>
-
-      <LetterPostViewButton />
-      <div className="button_post_view">
-        <button
-          key="choi"
-          onClick={() => onClickArtistViewPostButton("최정훈")}
-        >
-          최정훈
-        </button>
-        <button key="kim" onClick={() => onClickArtistViewPostButton("김도형")}>
-          김도형
-        </button>
-      </div>
+      <ArtistsPostViewButton setSelectorValue={setSelectorValue} />
 
       {/* 
           letterData 배열에서  writedTo(누구에게) 와  위에서 버튼으로 선택한 사람이 일치한 것을  새 배열로 만들어줍니다
-
           map으로 돌려서 데이터를  뿌려줍니다. 
       */}
       {letterData
         .filter((letter) => letter.writedTo === selectValue)
         .map((lD) => (
           <>
-            <LetterCard />
-            <figure key={lD.id} className="letter_card">
-              <img src={lD.avatar} alt="" />
-              <p className="letter_card_content">
-                <p>{lD.nickname}</p>
-                <p>{lD.content}</p>
-                <p className="letter_card_detail_button">
-                  <button
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      // 동적 라우팅이 되는 detail페이지에  state를 전달합니다
-                      navigate(`/detail/${lD.id}`, { state: { data: lD } });
-                    }}
-                  >
-                    더 보기
-                  </button>
+            <LetterCard>
+              <figure key={lD.id} className="letter_card">
+                <img src={lD.avatar} alt="" style={imageStyleSize} />
+
+                <p className="letter_card_content">
+                  <p>{lD.nickname}</p>
+                  <p>{lD.content}</p>
+                  <p className="letter_card_detail_button">
+                    <button
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // 동적 라우팅이 되는 detail페이지에  state를 전달합니다
+                        navigate(`/detail/${lD.id}`);
+                      }}
+                    >
+                      더 보기
+                    </button>
+                  </p>
                 </p>
-              </p>
-            </figure>
+              </figure>
+            </LetterCard>
           </>
         ))}
     </>

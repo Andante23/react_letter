@@ -33,7 +33,9 @@ const Router = () => {
         {/* 동적라우팅 */}
         <Route
           path="detail/:id"
-          element={<Detail setLetterData={setLetterData} />}
+          element={
+            <Detail setLetterData={setLetterData} letterData={letterData} />
+          }
         />
       </Routes>
     </BrowserRouter>

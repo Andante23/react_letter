@@ -1,3 +1,4 @@
+import { LetterDetailCard, LetterForm } from "Style/GlobalStyle";
 import React, { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
@@ -65,8 +66,9 @@ const Detail = ({ setLetterData }) => {
 
   return (
     <>
+      <LetterDetailCard />
       <figure>
-        <div>
+        <div className="letter_detail_text">
           <p>{location.state.data.nickname}</p>
           <p>{location.state.data.createdAt}</p>
         </div>
@@ -78,11 +80,16 @@ const Detail = ({ setLetterData }) => {
               onChange={(e) => setEditedContent(e.target.value)}
             />
           ) : (
-            // 그게 아니라면  비활성화시키죠
-            <p>{location.state.data.content}</p>
+            <>
+              {/* 그게 아니라면 비활성화시키죠 */}
+              <LetterDetailCard />
+              <p className="letter_detail_content">
+                {location.state.data.content}
+              </p>
+            </>
           )}
         </figcaption>
-        <div>
+        <div className="letter_detail_button">
           {isEditing ? (
             <>
               {/* 수정 에디터가 활성화 , 즉 나는 지금 수정하고 있습니다입니다. */}

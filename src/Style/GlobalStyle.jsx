@@ -35,7 +35,8 @@ form > button{
 
 
 form > button:hover{
-    background-color: #0b69d4;
+    background-color: #0680c2;
+    border-color: #0680c2;
     cursor: pointer;
 }
 
@@ -99,4 +100,46 @@ export const LetterPostViewButton = createGlobalStyle`
     }
 
 
+`;
+
+export const LetterDetailCard = createGlobalStyle`
+    figure{
+        background-color:black;
+        color: white;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    figure > .letter_detail_text {
+        display: flex;
+        justify-content: space-between;
+    }
+
+     figure >  figcaption > .letter_detail_content{
+        margin: 20px;
+        background-color: grey;
+        padding: 30px;
+        border-radius: 10px;
+    
+    }
+
+    
+      figure > .letter_detail_button > button{
+         
+         margin-left: 40px;
+         padding: 10px;
+         background-color: transparent;
+         border-color: white;
+         color: white;
+
+
+      }
+
+      figure > .letter_detail_button > button:hover{
+        cursor: pointer;
+
+      }
+
+   
 `;

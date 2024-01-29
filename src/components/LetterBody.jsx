@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
@@ -58,13 +57,12 @@ export const LetterBody = ({
     ]);
   };
 
-  const onClickArtistViewPostButton = (artistName) => {
-    setSelectorValue(artistName);
+  /**
+   *  최정훈 버튼을 클릭하면   최정훈에 부합하는 게시물을 보여주는 함수
+   */
+  const onClickArtistViewPostButton = (selectValue) => {
+    setSelectorValue(selectValue);
   };
-
-  const ref = useRef("");
-  console.log(ref);
-  console.log(ref.current);
 
   return (
     <>
@@ -102,6 +100,11 @@ export const LetterBody = ({
         </button>
       </div>
 
+      {/* 
+          letterData 배열에서  writedTo(누구에게) 와  위에서 버튼으로 선택한 사람이 일치한 것을  새 배열로 만들어줍니다
+
+          map으로 돌려서 데이터를  뿌려줍니다. 
+      */}
       {letterData
         .filter((letter) => letter.writedTo === selectValue)
         .map((lD) => (
@@ -113,7 +116,7 @@ export const LetterBody = ({
             <span
               style={{ cursor: "pointer" }}
               onClick={() => {
-                // Navigate to the detail page with state
+                // 동적 라우팅이 되는 detail페이지에  state를 전달합니다
                 navigate(`/detail/${lD.id}`, { state: { data: lD } });
               }}
             >

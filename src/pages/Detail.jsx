@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
-const Detail = ({ letterData, setLetterData }) => {
+const Detail = ({ setLetterData }) => {
   const { id } = useParams();
 
   // LetterBody에서 더 보기 ??? 이거 클릭하지 않습니까 . 거기에 자세히 보시면  데이터 있잖아요

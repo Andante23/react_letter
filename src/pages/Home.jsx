@@ -1,6 +1,5 @@
 import { LetterHeader } from "components/LetterHeader";
 import { LetterBody } from "components/LetterBody";
-import { useState } from "react";
 
 const Home = ({
   nickName,

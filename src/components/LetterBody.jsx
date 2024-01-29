@@ -1,5 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import {
+  LetterForm,
+  LetterCard,
+  LetterPostViewButton,
+} from "Style/GlobalStyle";
 
 export const LetterBody = ({
   nickName,
@@ -66,12 +71,14 @@ export const LetterBody = ({
 
   return (
     <>
+      <LetterForm />
       <form onSubmit={onSubmitInputForm}>
         <input
           type="text"
           name="nickname"
           value={nickName}
           onChange={onChangeNickName}
+          placeholder="닉네임"
           required
         />
         <input
@@ -79,8 +86,10 @@ export const LetterBody = ({
           name="content"
           value={content}
           onChange={onChangeContent}
+          placeholder="내용"
           required
         />
+
         <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
           <option value="최정훈">최정훈</option>
           <option value="김도형">김도형</option>
@@ -88,7 +97,8 @@ export const LetterBody = ({
         <button type="submit">추가하기</button>
       </form>
 
-      <div>
+      <LetterPostViewButton />
+      <div className="button_post_view">
         <button
           key="choi"
           onClick={() => onClickArtistViewPostButton("최정훈")}
@@ -108,21 +118,27 @@ export const LetterBody = ({
       {letterData
         .filter((letter) => letter.writedTo === selectValue)
         .map((lD) => (
-          <div key={lD.id}>
-            <img src={lD.avatar} alt="" />
-            <p>{lD.nickname}</p>
-            <p>{lD.content}</p>
-
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                // 동적 라우팅이 되는 detail페이지에  state를 전달합니다
-                navigate(`/detail/${lD.id}`, { state: { data: lD } });
-              }}
-            >
-              더 보기{lD.writedTo}
-            </span>
-          </div>
+          <>
+            <LetterCard />
+            <figure key={lD.id} className="letter_card">
+              <img src={lD.avatar} alt="" />
+              <p className="letter_card_content">
+                <p>{lD.nickname}</p>
+                <p>{lD.content}</p>
+                <p className="letter_card_detail_button">
+                  <button
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      // 동적 라우팅이 되는 detail페이지에  state를 전달합니다
+                      navigate(`/detail/${lD.id}`, { state: { data: lD } });
+                    }}
+                  >
+                    더 보기
+                  </button>
+                </p>
+              </p>
+            </figure>
+          </>
         ))}
     </>
   );

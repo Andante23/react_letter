@@ -1,6 +1,6 @@
-import { LetterDetailCard } from "Style/localStyle";
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const Detail = (props) => {
   //console.log(props);
@@ -57,57 +57,85 @@ const Detail = (props) => {
         .map((LD) => {
           return (
             <>
-              <LetterDetailCard>
-                <div>
-                  <p className="letter_detail_text">
-                    <b>{LD.nickname}</b>
+              <div>
+                <StLetterCard>
+                  <b>{LD.nickname}</b>
 
-                    <b>{LD.createdAt.substring(0, 10)}</b>
-                  </p>
+                  <b>{LD.createdAt}</b>
+                </StLetterCard>
+                {isEditing ? (
+                  <StLetterText
+                    value={editedContent}
+                    onChange={(e) => {
+                      setEditedContent(e.target.value);
+                    }}
+                  >
+                    {LD.content}
+                  </StLetterText>
+                ) : (
+                  <p>{LD.content}</p>
+                )}
+
+                <StLetterCardOptionButton>
                   {isEditing ? (
-                    <textarea
-                      className="letter_detail_content_edit"
-                      value={editedContent}
-                      onChange={(e) => {
-                        setEditedContent(e.target.value);
-                      }}
-                    >
-                      {LD.content}
-                    </textarea>
+                    <>
+                      <StLetterCardSave onClick={handleSave}>
+                        저장하기
+                      </StLetterCardSave>
+                      <StLetterCardCancel onClick={handleCancelEdit}>
+                        취소하기
+                      </StLetterCardCancel>
+                    </>
                   ) : (
-                    <p className="letter_detail_content">{LD.content}</p>
+                    <>
+                      <StLetterCardDelete onClick={deleteButton}>
+                        삭제하기
+                      </StLetterCardDelete>
+                      <StLetterCardUpdate onClick={handleEdit}>
+                        수정하기
+                      </StLetterCardUpdate>
+                    </>
                   )}
-
-                  <div className="detail_option_buttons">
-                    {isEditing ? (
-                      <>
-                        <button
-                          onClick={handleSave}
-                          className="content_edit_save"
-                        >
-                          저장하기
-                        </button>
-                        <button
-                          onClick={handleCancelEdit}
-                          className="content_edit_cancel"
-                        >
-                          취소하기
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button onClick={deleteButton}>삭제하기</button>
-                        <button onClick={handleEdit}>수정하기</button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </LetterDetailCard>
+                </StLetterCardOptionButton>
+              </div>
             </>
           );
         })}
     </>
   );
 };
+
+const StLetterCard = styled.p`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const StLetterText = styled.textarea`
+  width: 900px;
+  height: 100px;
+  margin-top: 40px;
+  margin-left: 450px;
+`;
+
+const StLetterCardOptionButton = styled.div`
+  margin-left: 1200px;
+  margin-top: 10px;
+`;
+
+const StLetterCardSave = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardCancel = styled.button`
+  border-radius: 5px;
+`;
+
+const StLetterCardDelete = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardUpdate = styled.button`
+  border-radius: 5px;
+`;
 
 export default Detail;

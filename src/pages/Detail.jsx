@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { LetterDataContext } from "context/LetterDataContext";
+import { useContext } from "react";
 
-const Detail = (props) => {
-  //console.log(props);
+const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
+
+  const data = useContext(LetterDataContext);
 
   // 에디터를  활성화 시켜주는 함수입니다.
   const handleEdit = () => {
@@ -18,7 +21,7 @@ const Detail = (props) => {
     //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
     //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
 
-    props.setLetterData((prevLetterData) => {
+    data.setLetterData((prevLetterData) => {
       const updatedData = prevLetterData.map((letter) =>
         letter.id === id ? { ...letter, content: editedContent } : letter
       );
@@ -39,7 +42,7 @@ const Detail = (props) => {
   const deleteButton = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
-      props.setLetterData((prevLetterData) =>
+      data.setLetterData((prevLetterData) =>
         prevLetterData.filter((letter) => letter.id !== id)
       );
       alert("성공적으로 삭제되었습니다.");
@@ -52,7 +55,7 @@ const Detail = (props) => {
 
   return (
     <>
-      {props.letterData
+      {data.letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (

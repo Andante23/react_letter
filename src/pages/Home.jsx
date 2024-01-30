@@ -1,29 +1,11 @@
 import { LetterHeader } from "components/LetterHeader";
 import { LetterBody } from "components/LetterBody";
 
-const Home = ({
-  nickName,
-  setNickName,
-  content,
-  setContent,
-  selectValue,
-  setSelectorValue,
-  letterData,
-  setLetterData,
-}) => {
+const Home = () => {
   return (
     <>
       <LetterHeader></LetterHeader>
-      <LetterBody
-        nickName={nickName}
-        setNickName={setNickName}
-        content={content}
-        setContent={setContent}
-        selectValue={selectValue}
-        setSelectorValue={setSelectorValue}
-        letterData={letterData}
-        setLetterData={setLetterData}
-      ></LetterBody>
+      <LetterBody></LetterBody>
     </>
   );
 };

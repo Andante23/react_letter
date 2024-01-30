@@ -3,35 +3,23 @@ import { useNavigate } from "react-router-dom";
 import { LetterInputForm } from "./LetterInputForm";
 import { ArtistsPostViewButton } from "./ArtistsPostViewButton";
 import styled from "styled-components";
+import { LetterDataContext } from "context/LetterDataContext";
+import { useContext } from "react";
 
-export const LetterBody = ({
-  nickName,
-  setNickName,
-  content,
-  setContent,
-  selectValue,
-  setSelectorValue,
-  letterData,
-  setLetterData,
-}) => {
+export const LetterBody = () => {
   const navigate = useNavigate();
+
+  const data = useContext(LetterDataContext);
+  console.log(data);
 
   return (
     <>
-      <LetterInputForm
-        nickName={nickName}
-        setNickName={setNickName}
-        setContent={setContent}
-        content={content}
-        setLetterData={setLetterData}
-        selectValue={selectValue}
-        setSelectorValue={setSelectorValue}
-      />
+      <LetterInputForm />
 
-      <ArtistsPostViewButton setSelectorValue={setSelectorValue} />
+      <ArtistsPostViewButton />
 
-      {letterData
-        .filter((letter) => letter.writedTo === selectValue)
+      {data.letterData
+        .filter((letter) => letter.writedTo === data.selectValue)
         .map((lD) => (
           <StFilTerCardBorder key={lD.id}>
             <StFilTerCardItem>

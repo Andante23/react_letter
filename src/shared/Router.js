@@ -3,6 +3,7 @@ import Home from "pages/Home";
 import Detail from "pages/Detail";
 import { useState } from "react";
 import dummy from "assets/fakedata.json";
+import { LetterDataContext } from "context/LetterDataContext";
 
 const Router = () => {
   // 값이 변동이 있는 변수들은  useState로 보관하기
@@ -17,16 +18,20 @@ const Router = () => {
         <Route
           path="/"
           element={
-            <Home
-              nickName={nickName}
-              setNickName={setNickName}
-              content={content}
-              setContent={setContent}
-              selectValue={selectValue}
-              setSelectorValue={setSelectorValue}
-              letterData={letterData}
-              setLetterData={setLetterData}
-            />
+            <LetterDataContext.Provider
+              value={{
+                nickName,
+                setNickName,
+                content,
+                setContent,
+                selectValue,
+                setSelectorValue,
+                letterData,
+                setLetterData,
+              }}
+            >
+              <Home />
+            </LetterDataContext.Provider>
           }
         />
 
@@ -34,7 +39,9 @@ const Router = () => {
         <Route
           path="detail/:id"
           element={
-            <Detail setLetterData={setLetterData} letterData={letterData} />
+            <LetterDataContext.Provider value={{ setLetterData, letterData }}>
+              <Detail />
+            </LetterDataContext.Provider>
           }
         />
       </Routes>

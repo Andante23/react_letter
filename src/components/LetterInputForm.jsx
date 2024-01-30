@@ -3,35 +3,30 @@ import React from "react";
 import styled from "styled-components";
 
 import { v4 as uuidv4 } from "uuid";
+import { LetterDataContext } from "context/LetterDataContext";
+import { useContext } from "react";
+export function LetterInputForm() {
+  const data = useContext(LetterDataContext);
 
-export function LetterInputForm({
-  nickName,
-  setNickName,
-  content,
-  setContent,
-  selectValue,
-  setSelectorValue,
-  setLetterData,
-}) {
   /**
    * 입력 nickName 값 저장하는 함수
    */
   const onChangeNickName = (event) => {
-    setNickName(event.target.value);
+    data.setNickName(event.target.value);
   };
 
   /**
    * 입력 content 값 저장하는 함수
    */
   const onChangeContent = (event) => {
-    setContent(event.target.value);
+    data.setContent(event.target.value);
   };
 
   /**
    * selectBox에서 선택한 option 값을 저장하는 함수
    */
   const onChangeSelect = (event) => {
-    setSelectorValue(event.target.value);
+    data.setSelectorValue(event.target.value);
   };
 
   /**
@@ -51,15 +46,15 @@ export function LetterInputForm({
 
     const date = new Date().toLocaleDateString("ko-kr", options);
 
-    setLetterData((prevLetterData) => [
+    data.setLetterData((prevLetterData) => [
       ...prevLetterData,
       {
         createdAt: date,
-        nickname: nickName,
+        nickname: data.nickName,
         avatar:
           "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: content,
-        writedTo: selectValue,
+        content: data.content,
+        writedTo: data.selectValue,
         id: uuidv4(),
       },
     ]);
@@ -72,7 +67,7 @@ export function LetterInputForm({
         <input
           type="text"
           name="nickname"
-          value={nickName}
+          value={data.nickName}
           onChange={onChangeNickName}
           placeholder="닉네임"
           required
@@ -82,7 +77,7 @@ export function LetterInputForm({
         <textarea
           type="text"
           name="content"
-          value={content}
+          value={data.content}
           onChange={onChangeContent}
           placeholder="내용"
           required
@@ -90,7 +85,11 @@ export function LetterInputForm({
         <br></br>
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
+          <select
+            name="zanabi"
+            onChange={onChangeSelect}
+            value={data.selectValue}
+          >
             <option value="최정훈">최정훈</option>
             <option value="김도형">김도형</option>
           </select>

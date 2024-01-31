@@ -92,3 +92,11 @@ export const StLetterCardDelete = styled.button`
 export const StLetterCardUpdate = styled.button`
   border-radius: 5px;
 `;
+
+// LetterHeader.jsx
+
+export const StLetterHeader = styled.header`
+  header {
+    text-align: center;
+  }
+`;

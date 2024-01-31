@@ -1,5 +1,5 @@
+import { StLetterHeader } from "Style/LogicalStyle";
 import React from "react";
-import styled from "styled-components";
 
 export const LetterHeader = () => {
   return (
@@ -12,9 +12,3 @@ export const LetterHeader = () => {
     </>
   );
 };
-
-const StLetterHeader = styled.header`
-  header {
-    text-align: center;
-  }
-`;

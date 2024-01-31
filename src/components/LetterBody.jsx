@@ -1,25 +1,44 @@
 import { useNavigate } from "react-router-dom";
-
 import { LetterInputForm } from "./LetterInputForm";
-import { ArtistsPostViewButton } from "./ArtistsPostViewButton";
-import styled from "styled-components";
-import { LetterDataContext } from "context/LetterDataContext";
-import { useContext } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { changeSelector } from "ridux/modules/FanLetter";
+import {
+  StFilTerCardBorder,
+  StFilTerCardItem,
+  StFilTerCardItemHeroImage,
+  StToThePage,
+} from "Style/LogicalStyle";
 
 export const LetterBody = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.selector);
+  const letterData = useSelector((state) => state.FanLetterReducer.letterData);
 
-  const data = useContext(LetterDataContext);
-  console.log(data);
+  // 선택한 값 업데이트 함수
+  const onClickArtistViewPostButton = (value = "") => {
+    // 액션 디스패치
+    dispatch(changeSelector(value));
+  };
+
+  console.log(letterData);
 
   return (
     <>
       <LetterInputForm />
 
-      <ArtistsPostViewButton />
+      <StPostView>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
+          최정훈
+        </StPostViewButton>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
+          김도형
+        </StPostViewButton>
+      </StPostView>
 
-      {data.letterData
-        .filter((letter) => letter.writedTo === data.selectValue)
+      {letterData
+        .filter((letter) => letter.writedTo === selector)
         .map((lD) => (
           <StFilTerCardBorder key={lD.id}>
             <StFilTerCardItem>
@@ -44,31 +63,3 @@ export const LetterBody = () => {
     </>
   );
 };
-
-// 지역 스타일링
-
-const StFilTerCardBorder = styled.div`
-  background-color: black;
-  border-radius: 5px;
-  color: white;
-  margin: 10px;
-`;
-
-const StFilTerCardItem = styled.figure`
-  display: flex;
-  padding: 10px;
-  align-items: center;
-`;
-
-const StFilTerCardItemHeroImage = styled.img`
-  margin-left: 10px;
-  margin-right: 12px;
-  border-radius: 10px;
-  width: 100px;
-`;
-
-const StToThePage = styled.p`
-  margin-left: 1500px;
-  margin-bottom: 10px;
-  cursor: pointer;
-`;

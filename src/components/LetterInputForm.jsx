@@ -1,32 +1,48 @@
 import { StLetterForm } from "Style/GlobalStyle";
 import React from "react";
-import styled from "styled-components";
 
 import { v4 as uuidv4 } from "uuid";
-import { LetterDataContext } from "context/LetterDataContext";
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  SET_CONTENT,
+  ADD_LETTER,
+  SET_NICKNAME,
+  SET_SELECT_VALUE,
+} from "ridux/modules/FanLetter";
+import {
+  StLetterFormOption,
+  StLetterFormOptionButton,
+} from "Style/LogicalStyle";
+
 export function LetterInputForm() {
-  const data = useContext(LetterDataContext);
+  const dispatch = useDispatch();
+
+  // Redux store에서 상태 가져오기
+  const { nickName, content, selectValue } = useSelector((state) => state);
+
+  console.log("nickName", nickName);
+  console.log("content", content);
+  console.log("select", selectValue);
 
   /**
    * 입력 nickName 값 저장하는 함수
    */
   const onChangeNickName = (event) => {
-    data.setNickName(event.target.value);
+    dispatch({ type: SET_NICKNAME, payload: event.target.value });
   };
 
   /**
    * 입력 content 값 저장하는 함수
    */
   const onChangeContent = (event) => {
-    data.setContent(event.target.value);
+    dispatch({ type: SET_CONTENT, payload: event.target.value });
   };
 
   /**
    * selectBox에서 선택한 option 값을 저장하는 함수
    */
   const onChangeSelect = (event) => {
-    data.setSelectorValue(event.target.value);
+    dispatch({ type: SET_SELECT_VALUE, payload: event.target.value });
   };
 
   /**
@@ -46,18 +62,20 @@ export function LetterInputForm() {
 
     const date = new Date().toLocaleDateString("ko-kr", options);
 
-    data.setLetterData((prevLetterData) => [
-      ...prevLetterData,
-      {
+    dispatch({
+      type: ADD_LETTER,
+      payload: {
         createdAt: date,
-        nickname: data.nickName,
-        avatar:
-          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: data.content,
-        writedTo: data.selectValue,
+        nickName,
+        content,
+        selectValue,
         id: uuidv4(),
       },
-    ]);
+    });
+
+    // 리셋
+    dispatch({ type: SET_NICKNAME, payload: "" });
+    dispatch({ type: SET_CONTENT, payload: "" });
   };
 
   return (
@@ -67,7 +85,7 @@ export function LetterInputForm() {
         <input
           type="text"
           name="nickname"
-          value={data.nickName}
+          value={nickName}
           onChange={onChangeNickName}
           placeholder="닉네임"
           required
@@ -77,7 +95,7 @@ export function LetterInputForm() {
         <textarea
           type="text"
           name="content"
-          value={data.content}
+          value={content}
           onChange={onChangeContent}
           placeholder="내용"
           required
@@ -85,11 +103,7 @@ export function LetterInputForm() {
         <br></br>
 
         <StLetterFormOption>
-          <select
-            name="zanabi"
-            onChange={onChangeSelect}
-            value={data.selectValue}
-          >
+          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
             <option value="최정훈">최정훈</option>
             <option value="김도형">김도형</option>
           </select>
@@ -102,24 +116,3 @@ export function LetterInputForm() {
     </>
   );
 }
-
-// 지역 스타일링
-
-const StLetterFormOption = styled.div`
-  margin-left: 300px;
-`;
-
-const StLetterFormOptionButton = styled.button`
-  margin: 10px;
-  padding: 10px;
-  border-color: #0b69d4;
-  background-color: #0b69d4;
-  border-radius: 10px;
-  color: white;
-
-  &:hover {
-    background-color: #0680c2;
-    border-color: #0680c2;
-    cursor: pointer;
-  }
-`;

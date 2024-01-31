@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  StLetterCard,
-  StLetterText,
-  StLetterCardOptionButton,
-  StLetterCardSave,
-  StLetterCardCancel,
-  StLetterCardDelete,
-  StLetterCardUpdate,
-} from "Style/LogicalStyle";
+import styled from "styled-components";
 
-const Detail = () => {
+const Detail = (props) => {
+  //console.log(props);
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +18,7 @@ const Detail = () => {
     //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
     //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
 
-    setLetterData((prevLetterData) => {
+    props.setLetterData((prevLetterData) => {
       const updatedData = prevLetterData.map((letter) =>
         letter.id === id ? { ...letter, content: editedContent } : letter
       );
@@ -46,7 +39,7 @@ const Detail = () => {
   const deleteButton = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
-      setLetterData((prevLetterData) =>
+      props.setLetterData((prevLetterData) =>
         prevLetterData.filter((letter) => letter.id !== id)
       );
       alert("성공적으로 삭제되었습니다.");
@@ -59,7 +52,7 @@ const Detail = () => {
 
   return (
     <>
-      {letterData
+      {props.letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (
@@ -111,5 +104,38 @@ const Detail = () => {
     </>
   );
 };
+
+const StLetterCard = styled.p`
+  display: flex;
+  justify-content: space-around;
+`;
+
+const StLetterText = styled.textarea`
+  width: 900px;
+  height: 100px;
+  margin-top: 40px;
+  margin-left: 450px;
+`;
+
+const StLetterCardOptionButton = styled.div`
+  margin-left: 1200px;
+  margin-top: 10px;
+`;
+
+const StLetterCardSave = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardCancel = styled.button`
+  border-radius: 5px;
+`;
+
+const StLetterCardDelete = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardUpdate = styled.button`
+  border-radius: 5px;
+`;
 
 export default Detail;

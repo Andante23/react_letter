@@ -1,48 +1,37 @@
 import { StLetterForm } from "Style/GlobalStyle";
 import React from "react";
+import styled from "styled-components";
 
 import { v4 as uuidv4 } from "uuid";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_CONTENT,
-  ADD_LETTER,
-  SET_NICKNAME,
-  SET_SELECT_VALUE,
-} from "ridux/modules/FanLetter";
-import {
-  StLetterFormOption,
-  StLetterFormOptionButton,
-} from "Style/LogicalStyle";
 
-export function LetterInputForm() {
-  const dispatch = useDispatch();
-
-  // Redux store에서 상태 가져오기
-  const { nickName, content, selectValue } = useSelector((state) => state);
-
-  console.log("nickName", nickName);
-  console.log("content", content);
-  console.log("select", selectValue);
-
+export function LetterInputForm({
+  nickName,
+  setNickName,
+  content,
+  setContent,
+  selectValue,
+  setSelectorValue,
+  setLetterData,
+}) {
   /**
    * 입력 nickName 값 저장하는 함수
    */
   const onChangeNickName = (event) => {
-    dispatch({ type: SET_NICKNAME, payload: event.target.value });
+    setNickName(event.target.value);
   };
 
   /**
    * 입력 content 값 저장하는 함수
    */
   const onChangeContent = (event) => {
-    dispatch({ type: SET_CONTENT, payload: event.target.value });
+    setContent(event.target.value);
   };
 
   /**
    * selectBox에서 선택한 option 값을 저장하는 함수
    */
   const onChangeSelect = (event) => {
-    dispatch({ type: SET_SELECT_VALUE, payload: event.target.value });
+    setSelectorValue(event.target.value);
   };
 
   /**
@@ -62,20 +51,18 @@ export function LetterInputForm() {
 
     const date = new Date().toLocaleDateString("ko-kr", options);
 
-    dispatch({
-      type: ADD_LETTER,
-      payload: {
+    setLetterData((prevLetterData) => [
+      ...prevLetterData,
+      {
         createdAt: date,
-        nickName,
-        content,
-        selectValue,
+        nickname: nickName,
+        avatar:
+          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
+        content: content,
+        writedTo: selectValue,
         id: uuidv4(),
       },
-    });
-
-    // 리셋
-    dispatch({ type: SET_NICKNAME, payload: "" });
-    dispatch({ type: SET_CONTENT, payload: "" });
+    ]);
   };
 
   return (
@@ -116,3 +103,24 @@ export function LetterInputForm() {
     </>
   );
 }
+
+// 지역 스타일링
+
+const StLetterFormOption = styled.div`
+  margin-left: 300px;
+`;
+
+const StLetterFormOptionButton = styled.button`
+  margin: 10px;
+  padding: 10px;
+  border-color: #0b69d4;
+  background-color: #0b69d4;
+  border-radius: 10px;
+  color: white;
+
+  &:hover {
+    background-color: #0680c2;
+    border-color: #0680c2;
+    cursor: pointer;
+  }
+`;

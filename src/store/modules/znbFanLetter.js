@@ -4,7 +4,7 @@ import { letterData } from "assets/data";
 
 // import { letterData } from "assets/data";
 
-const initialState = letterData;
+const zaNaBiFanLetterData = letterData;
 
 // 액션 변수 정의
 const ADD_ZNBILETTER = "ADD_ZNBLETTER";
@@ -40,7 +40,7 @@ export const onChangeSelectValue = (payload) => {
   return { type: CHANGE_SELECT_VALUE, payload };
 };
 
-export const zaNaBiLetter = (state = initialState, action) => {
+export const zaNaBiLetter = (state = zaNaBiFanLetterData, action) => {
   switch (action.type) {
     case ADD_ZNBILETTER:
       return [...state, action.payload];
@@ -75,3 +75,5 @@ export const zaNaBiLetter = (state = initialState, action) => {
       return state;
   }
 };
+
+const zaNaBiArtistName = "최정훈";

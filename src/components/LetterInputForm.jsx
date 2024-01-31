@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addZanNaBiLetter } from "store/modules/znbFanLetter";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function LetterInputForm() {
   // nickname . artist , content 폼 내부에 있음
@@ -14,6 +14,10 @@ export function LetterInputForm() {
 
   // selectValue : 아티스트별  버튼  상태 관리
   const [selectValue, setSelectValue] = useState("최정훈");
+
+  const onChangeSelect = (event) => {
+    setSelectValue(event.target.value);
+  };
 
   // 최종적인 데이터 저장하는 addZanNaBiLetter 적용하는데 쓰임
   const dispatch = useDispatch();
@@ -43,9 +47,16 @@ export function LetterInputForm() {
 
     // 데이터 추가
     dispatch(addZanNaBiLetter(inputDataInfo));
+
+    setNickName("");
+    setContent("");
   };
 
   const allZnbData = useSelector((state) => state.zaNaBiLetter);
+
+  const onClickArtistViewPostButton = (selectValue) => {
+    setSelectValue(selectValue);
+  };
 
   return (
     <>
@@ -76,13 +87,7 @@ export function LetterInputForm() {
         <br />
 
         <StLetterFormOption>
-          <select
-            name="zanabi"
-            onChange={(e) => {
-              setArtist(e.target.value);
-            }}
-            value={artist}
-          >
+          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
             <option value="최정훈">최정훈</option>
             <option value="김도형">김도형</option>
           </select>
@@ -94,16 +99,14 @@ export function LetterInputForm() {
       </form>
       <StPostView>
         <StPostViewButton
-          onClick={(e) => {
-            setSelectValue("최정훈");
-          }}
+          key="choi"
+          onClick={() => onClickArtistViewPostButton("최정훈")}
         >
           최정훈
         </StPostViewButton>
         <StPostViewButton
-          onClick={(e) => {
-            setSelectValue("김도형");
-          }}
+          key="kim"
+          onClick={() => onClickArtistViewPostButton("김도형")}
         >
           김도형
         </StPostViewButton>

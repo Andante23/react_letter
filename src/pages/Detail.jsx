@@ -1,58 +1,57 @@
-import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Detail = (props) => {
+const Detail = () => {
   //console.log(props);
   const { id } = useParams();
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState();
+  // const [isEditing, setIsEditing] = useState(false);
+  // const [editedContent, setEditedContent] = useState();
 
-  // 에디터를  활성화 시켜주는 함수입니다.
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  // // 에디터를  활성화 시켜주는 함수입니다.
+  // const handleEdit = () => {
+  //   setIsEditing(true);
+  // };
 
-  const handleSave = () => {
-    //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
-    //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
+  // const handleSave = () => {
+  //   //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
+  //   //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
 
-    props.setLetterData((prevLetterData) => {
-      const updatedData = prevLetterData.map((letter) =>
-        letter.id === id ? { ...letter, content: editedContent } : letter
-      );
-      return updatedData;
-    });
+  //   props.setLetterData((prevLetterData) => {
+  //     const updatedData = prevLetterData.map((letter) =>
+  //       letter.id === id ? { ...letter, content: editedContent } : letter
+  //     );
+  //     return updatedData;
+  //   });
 
-    // 수정사항까지 반영되었는데 활성화되면.... ???? 띄움니다
-    setIsEditing(false);
+  //   // 수정사항까지 반영되었는데 활성화되면.... ???? 띄움니다
+  //   setIsEditing(false);
 
-    // 아 그럼 이제 Home 라우터에 보이게 합시다.
-    navigate("/");
-  };
+  //   // 아 그럼 이제 Home 라우터에 보이게 합시다.
+  //   navigate("/");
+  // };
 
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
+  // const handleCancelEdit = () => {
+  //   setIsEditing(false);
+  // };
 
-  const deleteButton = () => {
-    const resultDelete = window.confirm("삭제하시겠습니까?");
-    if (resultDelete) {
-      props.setLetterData((prevLetterData) =>
-        prevLetterData.filter((letter) => letter.id !== id)
-      );
-      alert("성공적으로 삭제되었습니다.");
+  // const deleteButton = () => {
+  //   const resultDelete = window.confirm("삭제하시겠습니까?");
+  //   if (resultDelete) {
+  //     props.setLetterData((prevLetterData) =>
+  //       prevLetterData.filter((letter) => letter.id !== id)
+  //     );
+  //     alert("성공적으로 삭제되었습니다.");
 
-      navigate("/");
-    } else {
-      alert("삭제가 취소되었습니다.");
-    }
-  };
+  //     navigate("/");
+  //   } else {
+  //     alert("삭제가 취소되었습니다.");
+  //   }
+  // };
 
   return (
     <>
-      {props.letterData
+      {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (

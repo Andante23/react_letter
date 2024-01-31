@@ -1,110 +1,140 @@
 import { StLetterForm } from "Style/GlobalStyle";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addZanNaBiLetter } from "store/modules/znbFanLetter";
 import styled from "styled-components";
-
 import { v4 as uuidv4 } from "uuid";
+import { Navigate, useNavigate } from "react-router-dom";
 
-export function LetterInputForm({
-  nickName,
-  setNickName,
-  content,
-  setContent,
-  selectValue,
-  setSelectorValue,
-  setLetterData,
-}) {
-  /**
-   * 입력 nickName 값 저장하는 함수
-   */
-  const onChangeNickName = (event) => {
-    setNickName(event.target.value);
-  };
+export function LetterInputForm() {
+  // nickname . artist , content 폼 내부에 있음
+  const [nickname, setNickName] = useState("");
+  const [artist, setArtist] = useState("");
+  const [content, setContent] = useState("");
 
-  /**
-   * 입력 content 값 저장하는 함수
-   */
-  const onChangeContent = (event) => {
-    setContent(event.target.value);
-  };
+  // selectValue : 아티스트별  버튼  상태 관리
+  const [selectValue, setSelectValue] = useState("최정훈");
 
-  /**
-   * selectBox에서 선택한 option 값을 저장하는 함수
-   */
-  const onChangeSelect = (event) => {
-    setSelectorValue(event.target.value);
-  };
+  // 최종적인 데이터 저장하는 addZanNaBiLetter 적용하는데 쓰임
+  const dispatch = useDispatch();
 
-  /**
-   *  입력폼을 제출하는 함수
-   */
+  // 라우팅
+  const navigate = useNavigate();
 
-  const onSubmitInputForm = (event) => {
-    event.preventDefault();
+  const onSubmitInputForm = (e) => {
+    e.preventDefault();
 
-    // 현재 서비스 되고 있는 한국을 기준으로 toLocaleDateString...
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    if (nickname === "" && content === "") {
+      alert("전부 입력해주세요");
+      return;
+    }
+
+    const inputDataInfo = {
+      createdAt: new Date().toISOString(),
+      nickname,
+      content,
+      avatar:
+        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/36.jpg",
+      writedTo: selectValue,
+      id: uuidv4(),
     };
 
-    const date = new Date().toLocaleDateString("ko-kr", options);
+    console.log(inputDataInfo);
 
-    setLetterData((prevLetterData) => [
-      ...prevLetterData,
-      {
-        createdAt: date,
-        nickname: nickName,
-        avatar:
-          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: content,
-        writedTo: selectValue,
-        id: uuidv4(),
-      },
-    ]);
+    // 데이터 추가
+    dispatch(addZanNaBiLetter(inputDataInfo));
   };
+
+  const allZnbData = useSelector((state) => state.zaNaBiLetter);
 
   return (
     <>
+      {/* StLetterForm이 styled component로 가정됩니다. */}
       <StLetterForm />
-      <form onSubmit={onSubmitInputForm}>
+      <form>
         <input
           type="text"
           name="nickname"
-          value={nickName}
-          onChange={onChangeNickName}
+          value={nickname}
+          onChange={(e) => {
+            setNickName(e.target.value);
+          }}
           placeholder="닉네임"
           required
         />
-
-        <br></br>
+        <br />
         <textarea
           type="text"
           name="content"
           value={content}
-          onChange={onChangeContent}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           placeholder="내용"
           required
         />
-        <br></br>
+        <br />
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
+          <select
+            name="zanabi"
+            onChange={(e) => {
+              setArtist(e.target.value);
+            }}
+            value={artist}
+          >
             <option value="최정훈">최정훈</option>
             <option value="김도형">김도형</option>
           </select>
 
-          <StLetterFormOptionButton type="submit">
+          <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
       </form>
+      <StPostView>
+        <StPostViewButton
+          onClick={(e) => {
+            setSelectValue("최정훈");
+          }}
+        >
+          최정훈
+        </StPostViewButton>
+        <StPostViewButton
+          onClick={(e) => {
+            setSelectValue("김도형");
+          }}
+        >
+          김도형
+        </StPostViewButton>
+      </StPostView>
+
+      {allZnbData
+        .filter((letter) => letter.writedTo === selectValue)
+        .map((lD) => (
+          <StFilTerCardBorder key={lD.id}>
+            <StFilTerCardItem>
+              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+
+              <p>
+                <p>{lD.nickname}</p>
+                <p>{lD.content}</p>
+                <StToThePage>
+                  <a
+                    onClick={() => {
+                      navigate(`/detail/${lD.id}`);
+                    }}
+                  >
+                    더 보기
+                  </a>
+                </StToThePage>
+              </p>
+            </StFilTerCardItem>
+          </StFilTerCardBorder>
+        ))}
     </>
   );
 }
-
-// 지역 스타일링
 
 const StLetterFormOption = styled.div`
   margin-left: 300px;
@@ -123,4 +153,39 @@ const StLetterFormOptionButton = styled.button`
     border-color: #0680c2;
     cursor: pointer;
   }
+`;
+
+const StPostView = styled.div`
+  margin-left: 1600px;
+  margin-top: 40px;
+`;
+
+const StPostViewButton = styled.button`
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+const StFilTerCardBorder = styled.div`
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  margin: 10px;
+`;
+
+const StFilTerCardItem = styled.figure`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+
+const StFilTerCardItemHeroImage = styled.img`
+  margin-left: 10px;
+  margin-right: 12px;
+  border-radius: 10px;
+  width: 100px;
+`;
+
+const StToThePage = styled.p`
+  margin-left: 1500px;
+  margin-bottom: 10px;
+  cursor: pointer;
 `;

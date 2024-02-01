@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { LetterInputForm } from "./LetterInputForm";
 import { ArtistsPostViewButton } from "./ArtistsPostViewButton";
 import styled from "styled-components";
-import { LetterDataContext } from "context/LetterDataContext";
+import { ThemeContext } from "context/LetterDataContext";
 import { useContext } from "react";
 
 export const LetterBody = () => {
   const navigate = useNavigate();
 
-  const data = useContext(LetterDataContext);
+  const data = useContext(ThemeContext);
   console.log(data);
 
   return (

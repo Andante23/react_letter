@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { LetterDataContext } from "context/LetterDataContext";
+import { ThemeContext } from "context/LetterDataContext";
 import { useContext } from "react";
 
 export function ArtistsPostViewButton() {
-  const data = useContext(LetterDataContext);
+  const data = useContext(ThemeContext);
+  console.log(data);
 
   const onClickArtistViewPostButton = (value = "") => {
     data.setSelectorValue(value);

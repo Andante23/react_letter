@@ -1,12 +1,13 @@
-import { StLetterForm } from "Style/GlobalStyle";
+import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
 import styled from "styled-components";
 
 import { v4 as uuidv4 } from "uuid";
-import { LetterDataContext } from "context/LetterDataContext";
+import { ThemeContext } from "context/LetterDataContext";
 import { useContext } from "react";
+
 export function LetterInputForm() {
-  const data = useContext(LetterDataContext);
+  const data = useContext(ThemeContext);
 
   /**
    * 입력 nickName 값 저장하는 함수

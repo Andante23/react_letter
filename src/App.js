@@ -1,10 +1,13 @@
 import React from "react";
 import Router from "shared/Router";
+import { ThemeContext } from "styled-components";
 
 function App() {
   return (
     <>
-      <Router />
+      <ThemeContext.Provider>
+        <Router />
+      </ThemeContext.Provider>
     </>
   );
 }

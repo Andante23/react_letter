@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { LetterDataContext } from "context/LetterDataContext";
+import { ThemeContext } from "context/LetterDataContext";
 import { useContext } from "react";
 
 const Detail = () => {
@@ -10,8 +10,8 @@ const Detail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
 
-  const data = useContext(LetterDataContext);
-
+  const data = useContext(ThemeContext);
+  console.log(data);
   // 에디터를  활성화 시켜주는 함수입니다.
   const handleEdit = () => {
     setIsEditing(true);

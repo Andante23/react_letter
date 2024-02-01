@@ -22,6 +22,9 @@ export function LetterInputForm() {
   // 다이나믹 라우팅에 이용하기위해서...
   const navigate = useNavigate();
 
+  // useSelector 혹을 이용해서   리덕스 중앙저장소(store) 로 부터 데이터 받아옴
+  const allZnbData = useSelector((state) => state.zaNaBiLetter);
+
   /** 셀렉트 박스에서 값  받을 때 이용되는 함수 */
   const onChangeSelect = (event) => {
     setSelectValue(event.target.value);
@@ -49,7 +52,7 @@ export function LetterInputForm() {
       id: uuidv4(),
     };
 
-    // console.log(inputDataInfo);  궁금해서 찍어봄
+    console.log(inputDataInfo); // 궁금해서 찍어봄
 
     // 데이터 추가
     dispatch(addZanNaBiLetter(inputDataInfo));
@@ -58,9 +61,6 @@ export function LetterInputForm() {
     setNickName("");
     setContent("");
   };
-
-  // useSelector 혹을 이용해서   리덕스 중앙저장소(store) 로 부터 데이터 받아옴
-  const allZnbData = useSelector((state) => state.zaNaBiLetter);
 
   // 버튼에 따라  보여지게 하는 함수
   const onClickArtistViewPostButton = (selectValue) => {

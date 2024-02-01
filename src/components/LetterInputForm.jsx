@@ -11,9 +11,10 @@ export function LetterInputForm() {
   const [nickname, setNickName] = useState("");
   const [content, setContent] = useState("");
 
-  // selectValue :
-  // + 아티스트별  게시물 조회하는 데 쓰임
-  // + 셀렉트박스에서 값 받을때
+  // buttonValue : 버튼값 게시물 조회 할 때
+  const [buttonValue, setButtonValue] = useState("최정훈");
+
+  // selectValue : 셀렉트박스에서 값 받을때
   const [selectValue, setSelectValue] = useState("최정훈");
 
   // 최종적인 데이터 저장하는 addZanNaBiLetter 적용하는데 쓰임
@@ -35,11 +36,6 @@ export function LetterInputForm() {
    */
   const onSubmitInputForm = (e) => {
     e.preventDefault();
-
-    if (nickname === "" || content === "") {
-      alert("전부 입력해주세요");
-      return;
-    }
 
     // inputDataInfo 객체로 받음
     const inputDataInfo = {
@@ -64,7 +60,7 @@ export function LetterInputForm() {
 
   // 버튼에 따라  보여지게 하는 함수
   const onClickArtistViewPostButton = (selectValue) => {
-    setSelectValue(selectValue);
+    setButtonValue(selectValue);
   };
 
   return (
@@ -96,8 +92,8 @@ export function LetterInputForm() {
 
         <StLetterFormOption>
           <select name="zanabi" onChange={onChangeSelect}>
-            <option value="최정훈">최정훈</option>
-            <option value="김도형">김도형</option>
+            <option>최정훈</option>
+            <option>김도형</option>
           </select>
 
           <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>
@@ -106,22 +102,16 @@ export function LetterInputForm() {
         </StLetterFormOption>
       </form>
       <StPostView>
-        <StPostViewButton
-          key="choi"
-          onClick={() => onClickArtistViewPostButton("최정훈")}
-        >
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
           최정훈
         </StPostViewButton>
-        <StPostViewButton
-          key="kim"
-          onClick={() => onClickArtistViewPostButton("김도형")}
-        >
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
           김도형
         </StPostViewButton>
       </StPostView>
 
       {allZnbData
-        .filter((letter) => letter.writedTo === selectValue)
+        .filter((letter) => letter.writedTo === buttonValue)
         .map((lD) => (
           <StFilTerCardBorder key={lD.id}>
             <StFilTerCardItem>

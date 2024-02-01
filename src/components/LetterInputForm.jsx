@@ -95,7 +95,7 @@ export function LetterInputForm() {
         <br />
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
+          <select name="zanabi" onChange={onChangeSelect}>
             <option value="최정훈">최정훈</option>
             <option value="김도형">김도형</option>
           </select>

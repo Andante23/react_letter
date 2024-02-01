@@ -1,110 +1,141 @@
-import { StLetterForm } from "Style/GlobalStyle";
-import React from "react";
+import { StLetterForm } from "style/GlobalStyle";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addZanNaBiLetter } from "store/modules/znbFanLetter";
 import styled from "styled-components";
-
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
-export function LetterInputForm({
-  nickName,
-  setNickName,
-  content,
-  setContent,
-  selectValue,
-  setSelectorValue,
-  setLetterData,
-}) {
-  /**
-   * 입력 nickName 값 저장하는 함수
-   */
-  const onChangeNickName = (event) => {
-    setNickName(event.target.value);
-  };
+export function LetterInputForm() {
+  // nickname  content 는  입력 받기위해서
+  const [nickname, setNickName] = useState("");
+  const [content, setContent] = useState("");
 
-  /**
-   * 입력 content 값 저장하는 함수
-   */
-  const onChangeContent = (event) => {
-    setContent(event.target.value);
-  };
+  // buttonValue : 버튼값 게시물 조회 할 때
+  const [buttonValue, setButtonValue] = useState("최정훈");
 
-  /**
-   * selectBox에서 선택한 option 값을 저장하는 함수
-   */
+  // selectValue : 셀렉트박스에서 값 받을때
+  const [selectValue, setSelectValue] = useState("최정훈");
+
+  // 최종적인 데이터 저장하는 addZanNaBiLetter 적용하는데 쓰임
+  const dispatch = useDispatch();
+
+  // 다이나믹 라우팅에 이용하기위해서...
+  const navigate = useNavigate();
+
+  // useSelector 혹을 이용해서   리덕스 중앙저장소(store) 로 부터 데이터 받아옴
+  const allZnbData = useSelector((state) => state.zaNaBiLetter);
+
+  /** 셀렉트 박스에서 값  받을 때 이용되는 함수 */
   const onChangeSelect = (event) => {
-    setSelectorValue(event.target.value);
+    setSelectValue(event.target.value);
   };
 
   /**
-   *  입력폼을 제출하는 함수
+   * 폼의 데이터를 입력받아서  저장해주는 함수
    */
+  const onSubmitInputForm = (e) => {
+    e.preventDefault();
 
-  const onSubmitInputForm = (event) => {
-    event.preventDefault();
-
-    // 현재 서비스 되고 있는 한국을 기준으로 toLocaleDateString...
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    // inputDataInfo 객체로 받음
+    const inputDataInfo = {
+      createdAt: new Date().toISOString(),
+      nickname,
+      content,
+      avatar:
+        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/36.jpg",
+      writedTo: selectValue,
+      id: uuidv4(),
     };
 
-    const date = new Date().toLocaleDateString("ko-kr", options);
+    console.log(inputDataInfo); // 궁금해서 찍어봄
 
-    setLetterData((prevLetterData) => [
-      ...prevLetterData,
-      {
-        createdAt: date,
-        nickname: nickName,
-        avatar:
-          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: content,
-        writedTo: selectValue,
-        id: uuidv4(),
-      },
-    ]);
+    // 데이터 추가
+    dispatch(addZanNaBiLetter(inputDataInfo));
+
+    // 기존 props-drilling 에서 이용했던  리셋 적용
+    setNickName("");
+    setContent("");
+  };
+
+  // 버튼에 따라  보여지게 하는 함수
+  const onClickArtistViewPostButton = (selectValue) => {
+    setButtonValue(selectValue);
   };
 
   return (
     <>
       <StLetterForm />
-      <form onSubmit={onSubmitInputForm}>
+      <form>
         <input
           type="text"
           name="nickname"
-          value={nickName}
-          onChange={onChangeNickName}
+          value={nickname}
+          onChange={(e) => {
+            setNickName(e.target.value);
+          }}
           placeholder="닉네임"
           required
         />
-
-        <br></br>
+        <br />
         <textarea
           type="text"
           name="content"
           value={content}
-          onChange={onChangeContent}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           placeholder="내용"
           required
         />
-        <br></br>
+        <br />
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
-            <option value="최정훈">최정훈</option>
-            <option value="김도형">김도형</option>
+          <select name="zanabi" onChange={onChangeSelect}>
+            <option>최정훈</option>
+            <option>김도형</option>
           </select>
 
-          <StLetterFormOptionButton type="submit">
+          <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
       </form>
+      <StPostView>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
+          최정훈
+        </StPostViewButton>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
+          김도형
+        </StPostViewButton>
+      </StPostView>
+
+      {allZnbData
+        .filter((letter) => letter.writedTo === buttonValue)
+        .map((lD) => (
+          <StFilTerCardBorder key={lD.id}>
+            <StFilTerCardItem>
+              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+
+              <p>
+                <p>{lD.nickname}</p>
+                <p>{lD.content}</p>
+                <StToThePage>
+                  <a
+                    onClick={() => {
+                      navigate(`/detail/${lD.id}`);
+                    }}
+                  >
+                    더 보기
+                  </a>
+                </StToThePage>
+              </p>
+            </StFilTerCardItem>
+          </StFilTerCardBorder>
+        ))}
     </>
   );
 }
-
-// 지역 스타일링
 
 const StLetterFormOption = styled.div`
   margin-left: 300px;
@@ -123,4 +154,39 @@ const StLetterFormOptionButton = styled.button`
     border-color: #0680c2;
     cursor: pointer;
   }
+`;
+
+const StPostView = styled.div`
+  margin-left: 1600px;
+  margin-top: 40px;
+`;
+
+const StPostViewButton = styled.button`
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+const StFilTerCardBorder = styled.div`
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  margin: 10px;
+`;
+
+const StFilTerCardItem = styled.figure`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+
+const StFilTerCardItemHeroImage = styled.img`
+  margin-left: 10px;
+  margin-right: 12px;
+  border-radius: 10px;
+  width: 100px;
+`;
+
+const StToThePage = styled.p`
+  margin-left: 1500px;
+  margin-bottom: 10px;
+  cursor: pointer;
 `;

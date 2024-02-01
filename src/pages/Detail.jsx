@@ -1,58 +1,52 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import {
+  deleteZanNaBiLetter,
+  updateZanNaBiLetter,
+} from "store/modules/znbFanLetter";
 import styled from "styled-components";
 
-const Detail = (props) => {
-  //console.log(props);
+const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 수정모드는  첫번째에는 비활성화
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
 
-  // 에디터를  활성화 시켜주는 함수입니다.
+  const letterData = useSelector((state) => state.zaNaBiLetter);
+
+  // 팬레터 내용을 변경하고 , 삭제한 것을 반영하기 위해서 사용함
+  const dispatch = useDispatch();
+
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
-    //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
-
-    props.setLetterData((prevLetterData) => {
-      const updatedData = prevLetterData.map((letter) =>
-        letter.id === id ? { ...letter, content: editedContent } : letter
-      );
-      return updatedData;
-    });
-
-    // 수정사항까지 반영되었는데 활성화되면.... ???? 띄움니다
+    dispatch(updateZanNaBiLetter({ id, editedContent }));
     setIsEditing(false);
-
-    // 아 그럼 이제 Home 라우터에 보이게 합시다.
     navigate("/");
+
+    if (editedContent === "") {
+      alert("안을 비울수 없습니다.");
+      return;
+    }
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  const deleteButton = () => {
-    const resultDelete = window.confirm("삭제하시겠습니까?");
-    if (resultDelete) {
-      props.setLetterData((prevLetterData) =>
-        prevLetterData.filter((letter) => letter.id !== id)
-      );
-      alert("성공적으로 삭제되었습니다.");
-
-      navigate("/");
-    } else {
-      alert("삭제가 취소되었습니다.");
-    }
+  const handleDelete = (id) => {
+    dispatch(deleteZanNaBiLetter(id));
+    navigate("/");
   };
 
   return (
     <>
-      {props.letterData
+      {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (
@@ -88,10 +82,18 @@ const Detail = (props) => {
                     </>
                   ) : (
                     <>
-                      <StLetterCardDelete onClick={deleteButton}>
+                      <StLetterCardDelete
+                        onClick={() => {
+                          handleDelete(LD.id);
+                        }}
+                      >
                         삭제하기
                       </StLetterCardDelete>
-                      <StLetterCardUpdate onClick={handleEdit}>
+                      <StLetterCardUpdate
+                        onClick={() => {
+                          handleEdit(LD.content);
+                        }}
+                      >
                         수정하기
                       </StLetterCardUpdate>
                     </>
@@ -111,14 +113,14 @@ const StLetterCard = styled.p`
 `;
 
 const StLetterText = styled.textarea`
-  width: 900px;
+  width: 100%;
   height: 100px;
-  margin-top: 40px;
-  margin-left: 450px;
+  margin-top: 20px;
+  margin-left: 20px;
 `;
 
 const StLetterCardOptionButton = styled.div`
-  margin-left: 1200px;
+  margin-left: 20px;
   margin-top: 10px;
 `;
 
@@ -126,6 +128,7 @@ const StLetterCardSave = styled.button`
   margin-right: 10px;
   border-radius: 5px;
 `;
+
 const StLetterCardCancel = styled.button`
   border-radius: 5px;
 `;
@@ -134,6 +137,7 @@ const StLetterCardDelete = styled.button`
   margin-right: 10px;
   border-radius: 5px;
 `;
+
 const StLetterCardUpdate = styled.button`
   border-radius: 5px;
 `;

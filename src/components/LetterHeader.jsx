@@ -1,20 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import { StLetterHeader } from "style/LogicalStyle";
 
 export const LetterHeader = () => {
   return (
     <>
       <StLetterHeader>
-        <header>
-          <h1>잔나비 Letter</h1>
-        </header>
+        <h1>잔나비 Letter</h1>
       </StLetterHeader>
     </>
   );
 };
-
-const StLetterHeader = styled.header`
-  header {
-    text-align: center;
-  }
-`;

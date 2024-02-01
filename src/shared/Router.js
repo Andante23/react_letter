@@ -8,7 +8,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* 동적라우팅 */}
+        {/* 다이나믹 라우팅 */}
         <Route path="detail/:id" element={<Detail />} />
       </Routes>
     </BrowserRouter>

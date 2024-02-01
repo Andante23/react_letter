@@ -20,8 +20,6 @@ export const StLetterFormOptionButton = styled.button`
   }
 `;
 
-// LetterBody.jsx
-
 export const StFilTerCardBorder = styled.div`
   background-color: black;
   border-radius: 5px;
@@ -56,47 +54,4 @@ export const StPostView = styled.div`
 export const StPostViewButton = styled.button`
   border-radius: 10px;
   margin-left: 10px;
-`;
-
-// Detail
-
-export const StLetterCard = styled.p`
-  display: flex;
-  justify-content: space-around;
-`;
-
-export const StLetterText = styled.textarea`
-  width: 900px;
-  height: 100px;
-  margin-top: 40px;
-  margin-left: 450px;
-`;
-
-export const StLetterCardOptionButton = styled.div`
-  margin-left: 1200px;
-  margin-top: 10px;
-`;
-
-export const StLetterCardSave = styled.button`
-  margin-right: 10px;
-  border-radius: 5px;
-`;
-export const StLetterCardCancel = styled.button`
-  border-radius: 5px;
-`;
-
-export const StLetterCardDelete = styled.button`
-  margin-right: 10px;
-  border-radius: 5px;
-`;
-export const StLetterCardUpdate = styled.button`
-  border-radius: 5px;
-`;
-
-// LetterHeader.jsx
-
-export const StLetterHeader = styled.header`
-  header {
-    text-align: center;
-  }
 `;

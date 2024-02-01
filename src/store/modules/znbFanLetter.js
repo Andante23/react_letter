@@ -1,52 +1,45 @@
-// fanLetterReducer.js
-
 import { letterData } from "assets/data";
 
-// import { letterData } from "assets/data";
-
-const zaNaBiFanLetterData = letterData;
+// 리듀서 함수에 들어가는 초기값
+const initialState = letterData;
 
 // 액션 변수 정의
-const ADD_ZNBILETTER = "ADD_ZNBLETTER";
-const UPDATE_ZNBLETTER = "UPDATE_ZNBLETTER";
-const DELETE_ZNBLETTER = "DELETE_ZNBLETTER";
-const CHANGE_INPUT_NICKNAME = "CHANGE_INPUT_NICKNAME";
-const CHANGE_INPUT_CONTENT = "CHANGE_INPUT_CONTENT"; // Corrected action type
-const CHANGE_SELECT_VALUE = "CHANGE_SELECT_VALUE";
+const ADD_ZNBILETTER = "zaNaBiLetter/ADD_ZNBLETTER";
+const UPDATE_ZNBLETTER = "zaNaBiLetter/UPDATE_ZNBLETTER";
+const DELETE_ZNBLETTER = "zaNaBiLetter/DELETE_ZNBLETTER";
 
+/**
+ *  잔나비 팬 레터 데이터를 추가하는 액션 함수
+ */
 export const addZanNaBiLetter = (payload) => {
   return { type: ADD_ZNBILETTER, payload };
 };
 
+/**
+ *  잔나비 팬 레터의 내용을 변경하는 액션 함수
+ */
 export const updateZanNaBiLetter = (payload) => {
   return { type: UPDATE_ZNBLETTER, payload };
 };
 
+/**
+ *  잔나비 팬 레터 데이터를 삭제하는 액션 함수
+ */
 export const deleteZanNaBiLetter = (payload) => {
   return { type: DELETE_ZNBLETTER, payload };
 };
 
-export const onChangeNickName = (payload) => {
-  return { type: CHANGE_INPUT_NICKNAME, payload };
-};
-
-export const onChangeInputContent = (payload) => {
-  // Added action creator
-  return { type: CHANGE_INPUT_CONTENT, payload };
-};
-
-export const onChangeSelectValue = (payload) => {
-  // Added action creator
-  return { type: CHANGE_SELECT_VALUE, payload };
-};
-
-export const zaNaBiLetter = (state = zaNaBiFanLetterData, action) => {
+/**
+ 전달받은 action 타입에 따라 변화를 일으키는 리듀서 함수 
+ */
+export const zaNaBiLetter = (state = initialState, action) => {
+  // 액션타입에따라
   switch (action.type) {
     case ADD_ZNBILETTER:
+      // 47번처럼 실행될 문장
       return [...state, action.payload];
 
     case UPDATE_ZNBLETTER:
-      // Assuming payload contains 'id' and 'editedContent'
       return state.map((letter) =>
         letter.id === action.payload.id
           ? { ...letter, content: action.payload.editedContent }
@@ -54,26 +47,9 @@ export const zaNaBiLetter = (state = zaNaBiFanLetterData, action) => {
       );
 
     case DELETE_ZNBLETTER:
-      // Assuming payload contains 'id'
-      return state.filter((letter) => letter.id !== action.payload.id);
-
-    case CHANGE_INPUT_CONTENT:
-      return {
-        ...state,
-        // Assuming 'inputContent' is a property in your state
-        inputContent: action.payload,
-      };
-
-    case CHANGE_SELECT_VALUE:
-      return {
-        ...state,
-        // Assuming 'selectValue' is a property in your state
-        selectValue: action.payload,
-      };
+      return state.filter((letter) => letter.id !== action.payload);
 
     default:
       return state;
   }
 };
-
-const zaNaBiArtistName = "최정훈";

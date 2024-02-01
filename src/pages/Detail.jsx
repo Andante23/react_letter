@@ -10,72 +10,99 @@ import styled from "styled-components";
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 수정모드는  첫번째에는 비활성화
   const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState("");
+  const [editedContent, setEditedContent] = useState();
 
   const letterData = useSelector((state) => state.zaNaBiLetter);
+
+  // 팬레터 내용을 변경하고 , 삭제한 것을 반영하기 위해서 사용함
   const dispatch = useDispatch();
-
-  const selectedLetter = letterData.find((lD) => lD.id === id);
-
-  if (!selectedLetter) {
-    // Handle the case when the letter with the given ID is not found
-    return <p>Letter not found</p>;
-  }
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditedContent(selectedLetter.content);
   };
 
   const handleSave = () => {
-    dispatch(updateZanNaBiLetter(id, editedContent));
+    dispatch(updateZanNaBiLetter({ id, editedContent }));
     setIsEditing(false);
     navigate("/");
+
+    if (editedContent === "") {
+      alert("안을 비울수 없습니다.");
+      return;
+    }
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (id) => {
     dispatch(deleteZanNaBiLetter(id));
     navigate("/");
   };
 
   return (
     <>
-      <StLetterCard>
-        <b>{selectedLetter.nickname}</b>
-        <b>{selectedLetter.createdAt}</b>
-      </StLetterCard>
+      {letterData
+        .filter((lD) => lD.id === id)
+        .map((LD) => {
+          return (
+            <>
+              <div>
+                <StLetterCard>
+                  <b>{LD.nickname}</b>
 
-      {isEditing ? (
-        <StLetterText
-          value={editedContent}
-          onChange={(e) => setEditedContent(e.target.value)}
-        />
-      ) : (
-        <p>{selectedLetter.content}</p>
-      )}
+                  <b>{LD.createdAt}</b>
+                </StLetterCard>
+                {isEditing ? (
+                  <StLetterText
+                    value={editedContent}
+                    onChange={(e) => {
+                      setEditedContent(e.target.value);
+                    }}
+                  >
+                    {LD.content}
+                  </StLetterText>
+                ) : (
+                  <p>{LD.content}</p>
+                )}
 
-      <StLetterCardOptionButton>
-        {isEditing ? (
-          <>
-            <StLetterCardSave onClick={handleSave}>Save</StLetterCardSave>
-            <StLetterCardCancel onClick={handleCancelEdit}>
-              Cancel
-            </StLetterCardCancel>
-          </>
-        ) : (
-          <>
-            <StLetterCardDelete onClick={handleDelete}>
-              Delete
-            </StLetterCardDelete>
-            <StLetterCardUpdate onClick={handleEdit}>Edit</StLetterCardUpdate>
-          </>
-        )}
-      </StLetterCardOptionButton>
+                <StLetterCardOptionButton>
+                  {isEditing ? (
+                    <>
+                      <StLetterCardSave onClick={handleSave}>
+                        저장하기
+                      </StLetterCardSave>
+                      <StLetterCardCancel onClick={handleCancelEdit}>
+                        취소하기
+                      </StLetterCardCancel>
+                    </>
+                  ) : (
+                    <>
+                      <StLetterCardDelete
+                        onClick={() => {
+                          handleDelete(LD.id);
+                        }}
+                      >
+                        삭제하기
+                      </StLetterCardDelete>
+                      <StLetterCardUpdate
+                        onClick={() => {
+                          handleEdit(LD.content);
+                        }}
+                      >
+                        수정하기
+                      </StLetterCardUpdate>
+                    </>
+                  )}
+                </StLetterCardOptionButton>
+              </div>
+            </>
+          );
+        })}
     </>
   );
 };

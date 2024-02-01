@@ -1,3 +1,4 @@
+// letterData :  펜레터 데이터
 export const letterData = [
   {
     createdAt: "2023-11-03T02:07:09.423Z",

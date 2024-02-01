@@ -1,4 +1,4 @@
-import { StLetterForm } from "Style/GlobalStyle";
+import { StLetterForm } from "style/GlobalStyle";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addZanNaBiLetter } from "store/modules/znbFanLetter";
@@ -7,32 +7,38 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
 export function LetterInputForm() {
-  // nickname . artist , content 폼 내부에 있음
+  // nickname  content 는  입력 받기위해서
   const [nickname, setNickName] = useState("");
-  const [artist, setArtist] = useState("");
   const [content, setContent] = useState("");
 
-  // selectValue : 아티스트별  버튼  상태 관리
+  // selectValue :
+  // + 아티스트별  게시물 조회하는 데 쓰임
+  // + 셀렉트박스에서 값 받을때
   const [selectValue, setSelectValue] = useState("최정훈");
-
-  const onChangeSelect = (event) => {
-    setSelectValue(event.target.value);
-  };
 
   // 최종적인 데이터 저장하는 addZanNaBiLetter 적용하는데 쓰임
   const dispatch = useDispatch();
 
-  // 라우팅
+  // 다이나믹 라우팅에 이용하기위해서...
   const navigate = useNavigate();
 
+  /** 셀렉트 박스에서 값  받을 때 이용되는 함수 */
+  const onChangeSelect = (event) => {
+    setSelectValue(event.target.value);
+  };
+
+  /**
+   * 폼의 데이터를 입력받아서  저장해주는 함수
+   */
   const onSubmitInputForm = (e) => {
     e.preventDefault();
 
-    if (nickname === "" && content === "") {
+    if (nickname === "" || content === "") {
       alert("전부 입력해주세요");
       return;
     }
 
+    // inputDataInfo 객체로 받음
     const inputDataInfo = {
       createdAt: new Date().toISOString(),
       nickname,
@@ -43,24 +49,26 @@ export function LetterInputForm() {
       id: uuidv4(),
     };
 
-    console.log(inputDataInfo);
+    // console.log(inputDataInfo);  궁금해서 찍어봄
 
     // 데이터 추가
     dispatch(addZanNaBiLetter(inputDataInfo));
 
+    // 기존 props-drilling 에서 이용했던  리셋 적용
     setNickName("");
     setContent("");
   };
 
+  // useSelector 혹을 이용해서   리덕스 중앙저장소(store) 로 부터 데이터 받아옴
   const allZnbData = useSelector((state) => state.zaNaBiLetter);
 
+  // 버튼에 따라  보여지게 하는 함수
   const onClickArtistViewPostButton = (selectValue) => {
     setSelectValue(selectValue);
   };
 
   return (
     <>
-      {/* StLetterForm이 styled component로 가정됩니다. */}
       <StLetterForm />
       <form>
         <input

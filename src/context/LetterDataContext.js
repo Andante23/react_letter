@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-
+import dummy from "assets/fakedata.json";
 export const ThemeContext = createContext(null);
 
 export const AuthContext = (props) => {

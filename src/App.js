@@ -1,13 +1,13 @@
+import { AuthContext } from "context/LetterDataContext";
 import React from "react";
 import Router from "shared/Router";
-import { ThemeContext } from "styled-components";
 
 function App() {
   return (
     <>
-      <ThemeContext.Provider>
+      <AuthContext>
         <Router />
-      </ThemeContext.Provider>
+      </AuthContext>
     </>
   );
 }

@@ -10,7 +10,6 @@ export const StLetterHeader = styled.header`
 `;
 
 // LetterInputForm 컴포넌트
-
 export const StLetterFormOption = styled.div`
   margin-left: 300px;
 `;

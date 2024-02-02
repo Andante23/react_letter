@@ -10,17 +10,16 @@ import {
   StLetterFormOptionButton,
 } from "../style/LogicalStyle";
 
+/*LetterForm : 편지 입력폼 컴포넌트 */
 export function LetterInputForm() {
-  /* nickname , content : 입력값 저장  */
+  /*
+    nickname , content : 입력값 저장 
+    selectValue : selectBox의 option  값 저장
+    dispatch : 중앙 저장소 store에 데이터 저장할때 쓰려고
+  */
   const [nickname, setNickName] = useState("");
   const [content, setContent] = useState("");
-
-  /* selectValue : selectBox의 option  값 저장 */
   const [selectValue, setSelectValue] = useState("최정훈");
-
-  /*
-   dispatch : 중앙 저장소 store에 데이터 저장할때 쓰려고
-  */
   const dispatch = useDispatch();
 
   /*
@@ -46,23 +45,27 @@ export function LetterInputForm() {
     // 기본 동작 방지
     e.preventDefault();
 
-    const options = {
+    // toLocaleDateString에 쓰이는  두번째 매개변수 option
+    const option = {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     };
 
-    // inputDataInfo : store에 저장되는 데이터들
+    /* 
+     inputDataInfo : store에 저장되는 데이터들
+     createdAt : 현재 서비스 되는 한국 시간대로 지정
+     uuidv4 라이브러리를 이용해서 고유한 값 부여 
+     */
     const inputDataInfo = {
-      // createdAt : 현재 서비스 되는 한국 시간대로 지정
-      createdAt: new Date().toLocaleDateString("ko-kr", options),
+      createdAt: new Date().toLocaleDateString("ko-kr", option),
       nickname,
       content,
       avatar:
         "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/36.jpg",
       writedTo: selectValue,
-      // uuidv4 라이브러리를 이용해서 고유한 값 부여
+
       id: uuidv4(),
     };
 
@@ -77,6 +80,7 @@ export function LetterInputForm() {
       return;
     }
 
+    // 레터를 추가하겠습니까? 라고 사용자에게 물어보는 내용
     const isAdd = window.confirm("레터를 추가하겠습니까?");
     if (isAdd === true) {
       dispatch(addZanNaBiLetter(inputDataInfo));

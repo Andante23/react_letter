@@ -15,24 +15,39 @@ import {
   StLetterCardUpdate,
 } from "../style/LogicalStyle";
 
-// Detail 잔나비 레터 상세페이지 컴포넌트
+/* Detail 잔나비 레터 상세페이지 컴포넌트 */
 const Detail = () => {
+  /*
+    id : 다이나믹 라우팅에서 받은 id값   
+    navigate :  Home페이지로 이동
+    isEditing : 수정모드 활성화 / 비활성화 
+    editedContent : 수정된는 글 말하는 거임 
+    letterData : 리덕스 스토어에서 받아온 전체 팬 레터 데이터
+    dispatch : 삭제와 수정 할려고 사용한거임 
+  */
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
   const letterData = useSelector((state) => state.zaNaBiLetter);
-
   const dispatch = useDispatch();
 
+  /*
+   handleSave : 글 수정하는 함수
+   handleDelete : 글 삭제하는 함수
+   handleEdit : 수정모드 활성화
+   handleCancelEdit : 수정모드 비활성화 
+  */
   const handleSave = () => {
     const isUpdate = window.confirm("수정하시겠습니까?");
 
     if (isUpdate === true) {
       dispatch(updateZanNaBiLetter({ id, editedContent }));
       setIsEditing(false);
+      alert("수정되었습니다.");
       navigate("/");
     } else {
+      // 수정 에디터 활성화 된 상태로 두기
       setIsEditing(true);
     }
   };
@@ -44,6 +59,7 @@ const Detail = () => {
       dispatch(deleteZanNaBiLetter(id));
       navigate("/");
     } else {
+      alert("삭제 취소되었습니다");
       return;
     }
   };
@@ -56,13 +72,19 @@ const Detail = () => {
     setIsEditing(false);
   };
 
+  const option = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
   return (
     <>
       {/* 
-      useParam을 이용하여 받은 id값을 통해 필터링 된 새 배열을 
-      map으로 통해 뿌려준것   
-    
-    */}
+        1. useParam으로부터 받은 id를 이용해서 배열 필터링   
+        2. map으로 html에 데이터 뿌려주기
+       */}
       {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
@@ -74,6 +96,9 @@ const Detail = () => {
 
                   <b>{LD.createdAt}</b>
                 </StLetterCard>
+                {/* 
+                   isEditing : 수정되었느냐에 따른  모드 변경 조건부 렌더링
+                */}
                 {isEditing ? (
                   <StLetterText
                     value={editedContent}
@@ -85,7 +110,7 @@ const Detail = () => {
                     {LD.content}
                   </StLetterText>
                 ) : (
-                  <StLetterText>{LD.content}</StLetterText>
+                  <StLetterText disabled>{LD.content}</StLetterText>
                 )}
 
                 <StLetterCardOptionButton>

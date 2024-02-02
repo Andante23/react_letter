@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-export function ArtistsPostViewButton({ setSelectorValue }) {
+export function ArtistsPostViewButton({ setButtonValue, buttonValue }) {
   /**
    *  최정훈 버튼을 클릭하면   최정훈에 부합하는 게시물을 보여주는 함수
    */
-  const onClickArtistViewPostButton = (selectValue) => {
-    setSelectorValue(selectValue);
+  const onClickArtistViewPostButton = (buttonValue) => {
+    setButtonValue(buttonValue);
   };
 
   return (

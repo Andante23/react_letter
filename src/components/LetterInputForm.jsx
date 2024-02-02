@@ -1,9 +1,10 @@
-import { StLetterForm } from "Style/GlobalStyle";
+import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
 import styled from "styled-components";
 
 import { v4 as uuidv4 } from "uuid";
 
+/*LetterForm : 편지 입력폼 컴포넌트 */
 export function LetterInputForm({
   nickName,
   setNickName,
@@ -13,56 +14,73 @@ export function LetterInputForm({
   setSelectorValue,
   setLetterData,
 }) {
-  /**
-   * 입력 nickName 값 저장하는 함수
-   */
+  /*
+   onChangeSelect : 셀렉트 박스에서 얻은 값을 저장하는 함수
+   onChangeNickName : nickname 인풋에서 얻은 값을 저장하는 함수
+   onChangeContent : content 인풋에서 얻은 값을 저장하는 함수 
+   onSubmitInputForm : 입력값을 최종적으로  저장하는 함수 
+*/
   const onChangeNickName = (event) => {
     setNickName(event.target.value);
   };
 
-  /**
-   * 입력 content 값 저장하는 함수
-   */
   const onChangeContent = (event) => {
     setContent(event.target.value);
   };
 
-  /**
-   * selectBox에서 선택한 option 값을 저장하는 함수
-   */
   const onChangeSelect = (event) => {
     setSelectorValue(event.target.value);
   };
 
-  /**
-   *  입력폼을 제출하는 함수
-   */
-
   const onSubmitInputForm = (event) => {
     event.preventDefault();
 
-    // 현재 서비스 되고 있는 한국을 기준으로 toLocaleDateString...
+    // date : 현재 서비스 되고 있는 한국의 날짜 데이터 저장
     const options = {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     };
-
     const date = new Date().toLocaleDateString("ko-kr", options);
 
-    setLetterData((prevLetterData) => [
-      ...prevLetterData,
-      {
-        createdAt: date,
-        nickname: nickName,
-        avatar:
-          "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
-        content: content,
-        writedTo: selectValue,
-        id: uuidv4(),
-      },
-    ]);
+    // 레터를 추가하겠습니까? 라고 사용자에게 물어보는 내용
+    const isAdd = window.confirm("레터를 추가하겠습니까?");
+    if (isAdd === true) {
+      // 최종적인 입력 데이터를 저장하기
+      setLetterData((prevLetterData) => [
+        ...prevLetterData,
+        {
+          createdAt: date,
+          nickname: nickName,
+          avatar:
+            "https://t1.kakaocdn.net/together_image/common/avatar/avatar.png",
+          content: content,
+          writedTo: selectValue,
+          id: uuidv4(),
+        },
+      ]);
+    } else {
+      alert("취소하였습니다");
+      setNickName("");
+      setContent("");
+      return;
+    }
+
+    // 만약 nickname ,content가 공백으로 입력받으면
+    // trim을 통해 < 스페이스 4번 > 상태도.....입력 x
+    if (nickName.trim() === "" && content.trim() === "") {
+      //  경고 후~~~
+      alert("입력란을 모두 입력해주세요");
+      setNickName("");
+      setContent("");
+      //   입력 못받게 하기
+      return;
+    }
+
+    // 폼 리셋
+    setContent("");
+    setNickName("");
   };
 
   return (
@@ -90,8 +108,8 @@ export function LetterInputForm({
         <br></br>
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} value={selectValue}>
-            <option value="최정훈">최정훈</option>
+          <select name="zanabi" onChange={onChangeSelect}>
+            <option>최정훈</option>
             <option value="김도형">김도형</option>
           </select>
 

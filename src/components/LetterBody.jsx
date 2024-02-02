@@ -4,6 +4,9 @@ import { LetterInputForm } from "./LetterInputForm";
 import { ArtistsPostViewButton } from "./ArtistsPostViewButton";
 import styled from "styled-components";
 
+/*
+  데이터 보여주는  컴포넌트 
+*/
 export const LetterBody = ({
   nickName,
   setNickName,
@@ -13,6 +16,8 @@ export const LetterBody = ({
   setSelectorValue,
   letterData,
   setLetterData,
+  setButtonValue,
+  buttonValue,
 }) => {
   const navigate = useNavigate();
 
@@ -28,10 +33,14 @@ export const LetterBody = ({
         setSelectorValue={setSelectorValue}
       />
 
-      <ArtistsPostViewButton setSelectorValue={setSelectorValue} />
+      <ArtistsPostViewButton
+        setSelectorValue={setSelectorValue}
+        setButtonValue={setButtonValue}
+        buttonValue={buttonValue}
+      />
 
       {letterData
-        .filter((letter) => letter.writedTo === selectValue)
+        .filter((letter) => letter.writedTo === buttonValue)
         .map((lD) => (
           <StFilTerCardBorder key={lD.id}>
             <StFilTerCardItem>

@@ -10,6 +10,8 @@ const Home = ({
   setSelectorValue,
   letterData,
   setLetterData,
+  buttonValue,
+  setButtonValue,
 }) => {
   return (
     <>
@@ -23,6 +25,8 @@ const Home = ({
         setSelectorValue={setSelectorValue}
         letterData={letterData}
         setLetterData={setLetterData}
+        buttonValue={buttonValue}
+        setButtonValue={setButtonValue}
       ></LetterBody>
     </>
   );

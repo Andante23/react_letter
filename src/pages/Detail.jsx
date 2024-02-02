@@ -3,32 +3,45 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Detail = (props) => {
-  //console.log(props);
+  /*
+    id : 다이나믹 라우팅에서 받은 id값   
+    navigate :  Home페이지로 이동
+    isEditing : 수정모드 활성화 / 비활성화 
+    editedContent : 수정된는 글 말하는 거임 
+    letterData :   전체 팬 레터 데이터
+    dispatch : 삭제와 수정 할려고 사용한거임 
+  */
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
 
-  // 에디터를  활성화 시켜주는 함수입니다.
+  /*
+   handleSave : 글 수정하는 함수
+   handleDelete : 글 삭제하는 함수
+   handleEdit : 수정모드 활성화
+   handleCancelEdit : 수정모드 비활성화 
+  */
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
-    //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
+    const isUpdate = window.confirm("수정하시겠습니까?");
 
-    props.setLetterData((prevLetterData) => {
-      const updatedData = prevLetterData.map((letter) =>
-        letter.id === id ? { ...letter, content: editedContent } : letter
-      );
-      return updatedData;
-    });
+    if (isUpdate === true) {
+      props.setLetterData((prevLetterData) => {
+        const updatedData = prevLetterData.map((letter) =>
+          letter.id === id ? { ...letter, content: editedContent } : letter
+        );
+        return updatedData;
+      });
+    } else {
+      setIsEditing(true);
+    }
 
-    // 수정사항까지 반영되었는데 활성화되면.... ???? 띄움니다
     setIsEditing(false);
 
-    // 아 그럼 이제 Home 라우터에 보이게 합시다.
     navigate("/");
   };
 
@@ -73,7 +86,7 @@ const Detail = (props) => {
                     {LD.content}
                   </StLetterText>
                 ) : (
-                  <p>{LD.content}</p>
+                  <StLetterText disabled>{LD.content}</StLetterText>
                 )}
 
                 <StLetterCardOptionButton>

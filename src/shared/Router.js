@@ -9,6 +9,7 @@ const Router = () => {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
   const [selectValue, setSelectorValue] = useState("최정훈");
+  const [buttonValue, setButtonValue] = useState("최정훈");
   const [letterData, setLetterData] = useState(dummy);
 
   return (
@@ -26,6 +27,8 @@ const Router = () => {
               setSelectorValue={setSelectorValue}
               letterData={letterData}
               setLetterData={setLetterData}
+              buttonValue={buttonValue}
+              setButtonValue={setButtonValue}
             />
           }
         />

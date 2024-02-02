@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "pages/Home";
 import Detail from "pages/Detail";
-import { useState } from "react";
-import dummy from "assets/fakedata.json";
 
 const Router = () => {
   // 값이 변동이 있는 변수들은  useState로 보관하기
@@ -33,13 +31,8 @@ const Router = () => {
           }
         />
 
-        {/* 동적라우팅 */}
-        <Route
-          path="detail/:id"
-          element={
-            <Detail setLetterData={setLetterData} letterData={letterData} />
-          }
-        />
+        {/* 다이나믹 라우팅 */}
+        <Route path="detail/:id" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );

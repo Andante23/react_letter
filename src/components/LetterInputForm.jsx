@@ -1,7 +1,6 @@
 import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
 import styled from "styled-components";
-
 import { v4 as uuidv4 } from "uuid";
 
 /*LetterForm : 편지 입력폼 컴포넌트 */
@@ -20,13 +19,6 @@ export function LetterInputForm({
    onChangeContent : content 인풋에서 얻은 값을 저장하는 함수 
    onSubmitInputForm : 입력값을 최종적으로  저장하는 함수 
 */
-  const onChangeNickName = (event) => {
-    setNickName(event.target.value);
-  };
-
-  const onChangeContent = (event) => {
-    setContent(event.target.value);
-  };
 
   const onChangeSelect = (event) => {
     setSelectorValue(event.target.value);
@@ -86,43 +78,76 @@ export function LetterInputForm({
   return (
     <>
       <StLetterForm />
-      <form onSubmit={onSubmitInputForm}>
+      <form>
         <input
           type="text"
           name="nickname"
           value={nickName}
-          onChange={onChangeNickName}
+          onChange={(e) => {
+            setNickName(e.target.value);
+          }}
           placeholder="닉네임"
           required
         />
-
-        <br></br>
+        <br />
         <textarea
           type="text"
           name="content"
           value={content}
-          onChange={onChangeContent}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
           placeholder="내용"
           required
         />
-        <br></br>
+        <br />
 
         <StLetterFormOption>
           <select name="zanabi" onChange={onChangeSelect}>
             <option>최정훈</option>
-            <option value="김도형">김도형</option>
+            <option>김도형</option>
           </select>
 
-          <StLetterFormOptionButton type="submit">
+          <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
       </form>
+      <StPostView>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
+          최정훈
+        </StPostViewButton>
+        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
+          김도형
+        </StPostViewButton>
+      </StPostView>
+
+      {allZnbData
+        .filter((letter) => letter.writedTo === buttonValue)
+        .map((lD) => (
+          <StFilTerCardBorder key={lD.id}>
+            <StFilTerCardItem>
+              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+
+              <p>
+                <p>{lD.nickname}</p>
+                <p>{lD.content}</p>
+                <StToThePage>
+                  <a
+                    onClick={() => {
+                      navigate(`/detail/${lD.id}`);
+                    }}
+                  >
+                    더 보기
+                  </a>
+                </StToThePage>
+              </p>
+            </StFilTerCardItem>
+          </StFilTerCardBorder>
+        ))}
     </>
   );
 }
-
-// 지역 스타일링
 
 const StLetterFormOption = styled.div`
   margin-left: 300px;
@@ -141,4 +166,39 @@ const StLetterFormOptionButton = styled.button`
     border-color: #0680c2;
     cursor: pointer;
   }
+`;
+
+const StPostView = styled.div`
+  margin-left: 1600px;
+  margin-top: 40px;
+`;
+
+const StPostViewButton = styled.button`
+  border-radius: 10px;
+  margin-left: 10px;
+`;
+const StFilTerCardBorder = styled.div`
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  margin: 10px;
+`;
+
+const StFilTerCardItem = styled.figure`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+
+const StFilTerCardItemHeroImage = styled.img`
+  margin-left: 10px;
+  margin-right: 12px;
+  border-radius: 10px;
+  width: 100px;
+`;
+
+const StToThePage = styled.p`
+  margin-left: 1500px;
+  margin-bottom: 10px;
+  cursor: pointer;
 `;

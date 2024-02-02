@@ -1,5 +1,4 @@
 import { LetterHeader } from "components/LetterHeader";
-import { LetterBody } from "components/LetterBody";
 
 const Home = ({
   nickName,

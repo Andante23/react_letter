@@ -27,7 +27,6 @@ export function LetterInputForm() {
    onChangeNickName : nickname 인풋에서 얻은 값을 저장하는 함수
    onChangeContent : content 인풋에서 얻은 값을 저장하는 함수 
    onSubmitInputForm : 입력값을 최종적으로  redux 중앙저장소에 저장하는 함수 
-   
 */
   const onChangeSelect = (event) => {
     setSelectValue(event.target.value);

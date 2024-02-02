@@ -1,4 +1,3 @@
-import { StLetterForm } from "style/GlobalStyle";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addZanNaBiLetter } from "store/modules/znbFanLetter";
@@ -8,7 +7,8 @@ import LetterList from "./LetterList";
 import {
   StLetterFormOption,
   StLetterFormOptionButton,
-} from "../style/LogicalStyle";
+} from "style/LogicalStyle";
+import { StLetterForm } from "style/GlobalStyle";
 
 /*LetterForm : 편지 입력폼 컴포넌트 */
 export function LetterInputForm() {

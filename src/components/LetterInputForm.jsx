@@ -7,7 +7,7 @@ import LetterList from "./LetterList";
 import {
   StLetterFormOption,
   StLetterFormOptionButton,
-} from "style/LogicalStyle";
+} from "style/componentStyle/LetterInputFormStyle";
 import { StLetterForm } from "style/GlobalStyle";
 
 /*LetterForm : 편지 입력폼 컴포넌트 */

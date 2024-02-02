@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import {
+  StLetterCard,
+  StLetterText,
+  StLetterCardOptionButton,
+  StLetterCardSave,
+  StLetterCardCancel,
+  StLetterCardDelete,
+  StLetterCardUpdate,
+} from "style/componentStyle/DetailStyle";
 
 const Detail = () => {
   /*
@@ -113,38 +121,5 @@ const Detail = () => {
     </>
   );
 };
-
-const StLetterCard = styled.p`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const StLetterText = styled.textarea`
-  width: 900px;
-  height: 100px;
-  margin-top: 40px;
-  margin-left: 450px;
-`;
-
-const StLetterCardOptionButton = styled.div`
-  margin-left: 1200px;
-  margin-top: 10px;
-`;
-
-const StLetterCardSave = styled.button`
-  margin-right: 10px;
-  border-radius: 5px;
-`;
-const StLetterCardCancel = styled.button`
-  border-radius: 5px;
-`;
-
-const StLetterCardDelete = styled.button`
-  margin-right: 10px;
-  border-radius: 5px;
-`;
-const StLetterCardUpdate = styled.button`
-  border-radius: 5px;
-`;
 
 export default Detail;

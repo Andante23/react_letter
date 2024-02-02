@@ -11,7 +11,7 @@ import {
   StFilTerContent,
   StFilTerNickName,
   StPostViewButton,
-} from "style/LogicalStyle";
+} from "style/componentStyle/LetterListStyle";
 
 /* LetterList : 선택한 아티스트에 따라 리스트를 보여주는 컴포넌트  */
 const LetterList = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StLetterHeader } from "style/LogicalStyle";
+import styled from "styled-components";
 
 /* LetterHeader : 편지페이지 상단...*/
 export const LetterHeader = () => {
@@ -11,3 +11,9 @@ export const LetterHeader = () => {
     </>
   );
 };
+
+const StLetterHeader = styled.header`
+  h1 {
+    text-align: center;
+  }
+`;

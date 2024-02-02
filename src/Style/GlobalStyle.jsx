@@ -7,7 +7,7 @@ form{
   }
   
  input{
-   margin-bottom: 10px;
+   margin-bottom: 10px; 
    width: 500px;
  }
 

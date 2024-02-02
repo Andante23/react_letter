@@ -40,9 +40,9 @@ export function LetterInputForm() {
     setContent(event.target.value);
   };
 
-  const onSubmitInputForm = (e) => {
+  const onSubmitInputForm = (event) => {
     // 기본 동작 방지
-    e.preventDefault();
+    event.preventDefault();
 
     // toLocaleDateString에 쓰이는  두번째 매개변수 option
     const option = {
@@ -117,9 +117,14 @@ export function LetterInputForm() {
         <br />
 
         <StLetterFormOption>
-          <select name="zanabi" onChange={onChangeSelect} required>
-            <option>최정훈</option>
-            <option>김도형</option>
+          <select
+            name="zanabi"
+            onChange={onChangeSelect}
+            value={selectValue}
+            required
+          >
+            <option value="최정훈">최정훈</option>
+            <option value="김도형">김도형</option>
           </select>
 
           <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>

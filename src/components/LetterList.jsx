@@ -53,7 +53,9 @@ const LetterList = () => {
 
               <StFilTerCardData>
                 <StFilTerNickName>{lD.nickname}</StFilTerNickName>
-                <StFilTerContent>{lD.content}</StFilTerContent>
+                <StFilTerContent>
+                  {lD.content.slice(0, 50) + "..."}
+                </StFilTerContent>
 
                 {/* 
                  

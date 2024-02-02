@@ -1,14 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "pages/Home";
 import Detail from "pages/Detail";
+import { useState } from "react";
+import { data } from "assets/data";
 
 const Router = () => {
   // 값이 변동이 있는 변수들은  useState로 보관하기
-  const [nickName, setNickName] = useState("");
-  const [content, setContent] = useState("");
+
   const [selectValue, setSelectorValue] = useState("최정훈");
   const [buttonValue, setButtonValue] = useState("최정훈");
-  const [letterData, setLetterData] = useState(dummy);
+  const [nickName, setNickName] = useState("");
+  const [content, setContent] = useState("");
+  const [letterData, setLetterData] = useState(data);
 
   return (
     <BrowserRouter>

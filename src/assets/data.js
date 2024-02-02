@@ -1,5 +1,5 @@
 // letterData :  펜레터 데이터
-export const letterData = [
+export const data = [
   {
     createdAt: "2023-11-03T02:07:09.423Z",
     nickname: "Dr. Clint Christiansen",

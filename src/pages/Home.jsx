@@ -1,3 +1,4 @@
+import { LetterBody } from "components/LetterBody";
 import { LetterHeader } from "components/LetterHeader";
 
 const Home = ({
@@ -14,7 +15,7 @@ const Home = ({
 }) => {
   return (
     <>
-      <LetterHeader></LetterHeader>
+      <LetterHeader />
       <LetterBody
         nickName={nickName}
         setNickName={setNickName}
@@ -26,7 +27,7 @@ const Home = ({
         setLetterData={setLetterData}
         buttonValue={buttonValue}
         setButtonValue={setButtonValue}
-      ></LetterBody>
+      />
     </>
   );
 };

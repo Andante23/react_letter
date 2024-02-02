@@ -113,38 +113,6 @@ export function LetterInputForm({
           </StLetterFormOptionButton>
         </StLetterFormOption>
       </form>
-      <StPostView>
-        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
-          최정훈
-        </StPostViewButton>
-        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
-          김도형
-        </StPostViewButton>
-      </StPostView>
-
-      {allZnbData
-        .filter((letter) => letter.writedTo === buttonValue)
-        .map((lD) => (
-          <StFilTerCardBorder key={lD.id}>
-            <StFilTerCardItem>
-              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
-
-              <p>
-                <p>{lD.nickname}</p>
-                <p>{lD.content}</p>
-                <StToThePage>
-                  <a
-                    onClick={() => {
-                      navigate(`/detail/${lD.id}`);
-                    }}
-                  >
-                    더 보기
-                  </a>
-                </StToThePage>
-              </p>
-            </StFilTerCardItem>
-          </StFilTerCardBorder>
-        ))}
     </>
   );
 }

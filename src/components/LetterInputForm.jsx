@@ -1,4 +1,4 @@
-import { StLetterForm } from "style/GlobalStyle";
+import { StLetterForm } from "../style/GlobalStyle";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";

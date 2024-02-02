@@ -5,30 +5,10 @@ import { useContext } from "react";
 
 export function ArtistsPostViewButton() {
   const data = useContext(ThemeContext);
-  console.log(data);
 
-  const onClickArtistViewPostButton = (value = "") => {
-    data.setSelectorValue(value);
-  };
+  const { setSelectorValue } = data;
 
-  return (
-    <>
-      <StPostView>
-        <StPostViewButton
-          key="choi"
-          onClick={() => onClickArtistViewPostButton("최정훈")}
-        >
-          최정훈
-        </StPostViewButton>
-        <StPostViewButton
-          key="kim"
-          onClick={() => onClickArtistViewPostButton("김도형")}
-        >
-          김도형
-        </StPostViewButton>
-      </StPostView>
-    </>
-  );
+  return <></>;
 }
 
 const StPostView = styled.div`

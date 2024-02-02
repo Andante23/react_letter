@@ -11,7 +11,8 @@ const Detail = () => {
   const [editedContent, setEditedContent] = useState();
 
   const data = useContext(ThemeContext);
-  console.log(data);
+  const { setLetterData, letterData } = data;
+
   // 에디터를  활성화 시켜주는 함수입니다.
   const handleEdit = () => {
     setIsEditing(true);
@@ -21,7 +22,7 @@ const Detail = () => {
     //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
     //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
 
-    data.setLetterData((prevLetterData) => {
+    setLetterData((prevLetterData) => {
       const updatedData = prevLetterData.map((letter) =>
         letter.id === id ? { ...letter, content: editedContent } : letter
       );
@@ -42,7 +43,7 @@ const Detail = () => {
   const deleteButton = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
-      data.setLetterData((prevLetterData) =>
+      setLetterData((prevLetterData) =>
         prevLetterData.filter((letter) => letter.id !== id)
       );
       alert("성공적으로 삭제되었습니다.");
@@ -55,7 +56,7 @@ const Detail = () => {
 
   return (
     <>
-      {data.letterData
+      {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (

@@ -1,7 +1,10 @@
 import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
-import styled from "styled-components";
 
+import {
+  StLetterFormOption,
+  StLetterFormOptionButton,
+} from "style/componentStyle/LetterInputFormStyle";
 import { v4 as uuidv4 } from "uuid";
 import { ThemeContext } from "context/LetterDataContext";
 import { useContext } from "react";
@@ -82,64 +85,43 @@ export function LetterInputForm() {
       data.setContent("");
       return;
     }
-
-    return (
-      <>
-        <StLetterForm />
-        <form onSubmit={onSubmitInputForm}>
-          <input
-            type="text"
-            name="nickname"
-            value={data.nickName}
-            onChange={onChangeNickName}
-            placeholder="닉네임"
-            required
-          />
-
-          <br></br>
-          <textarea
-            type="text"
-            name="content"
-            value={data.content}
-            onChange={onChangeContent}
-            placeholder="내용"
-            required
-          />
-          <br></br>
-
-          <StLetterFormOption>
-            <select name="zanabi" onChange={onChangeSelect}>
-              <option>최정훈</option>
-              <option>김도형</option>
-            </select>
-
-            <StLetterFormOptionButton type="submit">
-              추가하기
-            </StLetterFormOptionButton>
-          </StLetterFormOption>
-        </form>
-      </>
-    );
   };
+
+  return (
+    <>
+      <StLetterForm />
+      <form onSubmit={onSubmitInputForm}>
+        <input
+          type="text"
+          name="nickname"
+          value={data.nickName}
+          onChange={onChangeNickName}
+          placeholder="닉네임"
+          required
+        />
+
+        <br></br>
+        <textarea
+          type="text"
+          name="content"
+          value={data.content}
+          onChange={onChangeContent}
+          placeholder="내용"
+          required
+        />
+        <br></br>
+
+        <StLetterFormOption>
+          <select name="zanabi" onChange={onChangeSelect}>
+            <option>최정훈</option>
+            <option>김도형</option>
+          </select>
+
+          <StLetterFormOptionButton type="submit">
+            추가하기
+          </StLetterFormOptionButton>
+        </StLetterFormOption>
+      </form>
+    </>
+  );
 }
-
-// 지역 스타일링
-
-const StLetterFormOption = styled.div`
-  margin-left: 300px;
-`;
-
-const StLetterFormOptionButton = styled.button`
-  margin: 10px;
-  padding: 10px;
-  border-color: #0b69d4;
-  background-color: #0b69d4;
-  border-radius: 10px;
-  color: white;
-
-  &:hover {
-    background-color: #0680c2;
-    border-color: #0680c2;
-    cursor: pointer;
-  }
-`;

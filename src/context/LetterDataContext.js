@@ -8,6 +8,7 @@ export const AuthContext = (props) => {
   const [content, setContent] = useState("");
   const [selectValue, setSelectorValue] = useState("최정훈");
   const [letterData, setLetterData] = useState(dummy);
+  const [buttonValue, setButtonValue] = useState("최정훈");
 
   return (
     <ThemeContext.Provider
@@ -20,6 +21,8 @@ export const AuthContext = (props) => {
         setSelectorValue,
         letterData,
         setLetterData,
+        buttonValue,
+        setButtonValue,
       }}
     >
       {props.children}

@@ -49,7 +49,7 @@ const DetailPage = ({ letterData, setLetterData }) => {
     setIsEditing(false);
   };
 
-  const deleteButton = () => {
+  const handleDelete = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
       setLetterData((prevLetterData) =>
@@ -101,7 +101,7 @@ const DetailPage = ({ letterData, setLetterData }) => {
                     </>
                   ) : (
                     <>
-                      <StLetterCardDelete onClick={deleteButton}>
+                      <StLetterCardDelete onClick={handleDelete}>
                         삭제하기
                       </StLetterCardDelete>
                       <StLetterCardUpdate onClick={handleEdit}>

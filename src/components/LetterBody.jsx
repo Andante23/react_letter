@@ -36,7 +36,6 @@ export const LetterBody = ({
       <ArtistsPostViewButton
         setSelectorValue={setSelectorValue}
         setButtonValue={setButtonValue}
-        buttonValue={buttonValue}
       />
 
       {letterData

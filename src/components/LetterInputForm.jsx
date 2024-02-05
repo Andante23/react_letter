@@ -1,4 +1,3 @@
-import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -27,13 +26,13 @@ export function LetterInputForm({
   const onSubmitInputForm = (event) => {
     event.preventDefault();
 
-    // date : 현재 서비스 되고 있는 한국의 날짜 데이터 저장
     const options = {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     };
+    // date : 현재 서비스 되고 있는 한국의 날짜 데이터 저장
     const date = new Date().toLocaleDateString("ko-kr", options);
 
     // 레터를 추가하겠습니까? 라고 사용자에게 물어보는 내용
@@ -77,8 +76,7 @@ export function LetterInputForm({
 
   return (
     <>
-      <StLetterForm />
-      <form>
+      <StLetterForm>
         <input
           type="text"
           name="nickname"
@@ -104,18 +102,22 @@ export function LetterInputForm({
 
         <StLetterFormOption>
           <select name="zanabi" onChange={onChangeSelect}>
-            <option>최정훈</option>
-            <option>김도형</option>
+            <option value={"최정훈"}>최정훈</option>
+            <option value={"김도형"}>김도형</option>
           </select>
 
           <StLetterFormOptionButton type="submit" onClick={onSubmitInputForm}>
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
-      </form>
+      </StLetterForm>
     </>
   );
 }
+
+const StLetterForm = styled.form`
+  margin-left: 700px;
+`;
 
 const StLetterFormOption = styled.div`
   margin-left: 300px;

@@ -1,7 +1,7 @@
 import { LetterBody } from "components/LetterBody";
 import { LetterHeader } from "components/LetterHeader";
 
-const Home = ({
+const HomePage = ({
   nickName,
   setNickName,
   content,
@@ -32,4 +32,4 @@ const Home = ({
   );
 };
 
-export default Home;
+export default HomePage;

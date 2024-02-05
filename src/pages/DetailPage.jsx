@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const Detail = (props) => {
+const DetailPage = ({ letterData, setLetterData }) => {
   /*
     id : 다이나믹 라우팅에서 받은 id값   
     navigate :  Home페이지로 이동
@@ -30,7 +30,7 @@ const Detail = (props) => {
     const isUpdate = window.confirm("수정하시겠습니까?");
 
     if (isUpdate === true) {
-      props.setLetterData((prevLetterData) => {
+      setLetterData((prevLetterData) => {
         const updatedData = prevLetterData.map((letter) =>
           letter.id === id ? { ...letter, content: editedContent } : letter
         );
@@ -52,7 +52,7 @@ const Detail = (props) => {
   const deleteButton = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
-      props.setLetterData((prevLetterData) =>
+      setLetterData((prevLetterData) =>
         prevLetterData.filter((letter) => letter.id !== id)
       );
       alert("성공적으로 삭제되었습니다.");
@@ -65,7 +65,7 @@ const Detail = (props) => {
 
   return (
     <>
-      {props.letterData
+      {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (
@@ -118,6 +118,8 @@ const Detail = (props) => {
   );
 };
 
+export default DetailPage;
+
 const StLetterCard = styled.p`
   display: flex;
   justify-content: space-around;
@@ -150,5 +152,3 @@ const StLetterCardDelete = styled.button`
 const StLetterCardUpdate = styled.button`
   border-radius: 5px;
 `;
-
-export default Detail;

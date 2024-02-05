@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "pages/HomePage";
 import DetailPage from "pages/DetailPage";
 import { useState } from "react";
-import { data } from "assets/data";
+import data from "assets/fakedata.json";
 
 const Router = () => {
   const [selectValue, setSelectorValue] = useState("최정훈");

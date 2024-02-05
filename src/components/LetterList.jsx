@@ -15,9 +15,8 @@ const LetterList = () => {
   const navigate = useNavigate();
   const allZnbData = useSelector((state) => state.zaNaBiLetter);
 
-  const handleArtistPostViewClick = (selectValue) => {
+  const handleArtistPostViewClick = (selectValue) =>
     setButtonValue(selectValue);
-  };
 
   return (
     <>

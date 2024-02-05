@@ -25,17 +25,11 @@ export function LetterInputForm() {
    onChangeContent : content 인풋에서 얻은 값을 저장하는 함수 
    onSubmitInputForm : 입력값을 최종적으로  redux 중앙저장소에 저장하는 함수 
 */
-  const onChangeSelect = (event) => {
-    setSelectValue(event.target.value);
-  };
+  const onChangeSelect = (event) => setSelectValue(event.target.value);
 
-  const onChangeNickName = (event) => {
-    setNickName(event.target.value);
-  };
+  const onChangeNickName = (event) => setNickName(event.target.value);
 
-  const onChangeContent = (event) => {
-    setContent(event.target.value);
-  };
+  const onChangeContent = (event) => setContent(event.target.value);
 
   const onSubmitInputForm = (event) => {
     // 기본 동작 방지

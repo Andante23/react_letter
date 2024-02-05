@@ -22,9 +22,7 @@ const DetailPage = ({ letterData, setLetterData }) => {
    handleEdit : 수정모드 활성화
    handleCancelEdit : 수정모드 비활성화 
   */
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  const handleEdit = () => setIsEditing(true);
 
   const handleSave = () => {
     const isUpdate = window.confirm("수정하시겠습니까?");
@@ -45,9 +43,7 @@ const DetailPage = ({ letterData, setLetterData }) => {
     navigate("/");
   };
 
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
+  const handleCancelEdit = () => setIsEditing(false);
 
   const handleDelete = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");

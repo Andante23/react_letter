@@ -19,9 +19,7 @@ export function LetterInputForm({
    onSubmitInputForm : 입력값을 최종적으로  저장하는 함수 
 */
 
-  const onChangeSelect = (event) => {
-    setSelectorValue(event.target.value);
-  };
+  const onChangeSelect = (event) => setSelectorValue(event.target.value);
 
   const onSubmitInputForm = (event) => {
     event.preventDefault();

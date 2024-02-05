@@ -73,26 +73,27 @@ export function LetterInputForm() {
   return (
     <>
       <StLetterForm onSubmit={onSubmitInputForm}>
-        <input
-          type="text"
-          name="nickname"
-          value={data.nickName}
-          onChange={onChangeNickName}
-          placeholder="닉네임"
-          required
-        />
+        <StLetterInputDisplay>
+          <StLetterFormInput
+            type="text"
+            name="nickname"
+            value={data.nickName}
+            onChange={onChangeNickName}
+            placeholder="닉네임"
+            required
+          />
 
-        <br></br>
-        <textarea
-          type="text"
-          name="content"
-          value={data.content}
-          onChange={onChangeContent}
-          placeholder="내용"
-          required
-        />
-        <br></br>
-
+          <br></br>
+          <StLetterFormTextArea
+            type="text"
+            name="content"
+            value={data.content}
+            onChange={onChangeContent}
+            placeholder="내용"
+            required
+          />
+          <br></br>
+        </StLetterInputDisplay>
         <StLetterFormOption>
           <select name="zanabi" onChange={onChangeSelect}>
             <option>최정훈</option>
@@ -111,11 +112,32 @@ export function LetterInputForm() {
 // styled 컴포넌트
 
 const StLetterForm = styled.form`
-  margin-left: 700px;
+  margin: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StLetterInputDisplay = styled.div`
+  margin: auto;
+`;
+
+const StLetterFormInput = styled.input`
+  padding: 5px;
+  width: 900px;
+`;
+
+const StLetterFormTextArea = styled.textarea`
+  padding: 5px;
+  margin-top: 10px;
+  width: 900px;
+  height: 400px;
 `;
 
 const StLetterFormOption = styled.div`
-  margin-left: 300px;
+  margin-left: 750px;
+  margin-top: 10px;
 `;
 
 const StLetterFormOptionButton = styled.button`

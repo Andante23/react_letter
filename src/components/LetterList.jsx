@@ -34,36 +34,44 @@ const LetterList = () => {
           2. map을 통해서 반복문 돌리기!!!!!
      */}
 
-      {allZnbData
-        .filter((letter) => letter.writedTo === buttonValue)
-        .map((lD) => (
-          <StFilTerCardBorder key={lD.id}>
-            <StFilTerCardItem>
-              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+      {allZnbData.filter((ld) => ld.writedTo === buttonValue).length !== 0 ? (
+        <div>
+          {letterData
+            .filter((ld) => ld.writedTo === buttonValue)
+            .map((ld) => {
+              return (
+                <StFilTerCardBorder>
+                  <StFilTerCardItem>
+                    <StFilTerCardItemHeroImage
+                      src={ld.avatar}
+                      alt="대체 이미지"
+                    />
 
-              <StFilTerCardData>
-                <StFilTerNickName>{lD.nickname}</StFilTerNickName>
-                <StFilTerContent>
-                  {lD.content.slice(0, 50) + "..."}
-                </StFilTerContent>
-
-                {/* 
-                 
-                리액트 라우터 돔 라이브러리의 메서드인 navigate를 이용해서
-                detail 페이지로  다이나믹하게 이동하기 
-               
-               */}
-                <StToThePage
-                  onClick={() => {
-                    navigate(`/detail/${lD.id}`);
-                  }}
-                >
-                  더 보기
-                </StToThePage>
-              </StFilTerCardData>
-            </StFilTerCardItem>
-          </StFilTerCardBorder>
-        ))}
+                    <p>
+                      <p>{ld.nickname}</p>
+                      <p>{ld.content.slice(0, 50) + "..."}</p>
+                      <StToThePage>
+                        <a
+                          onClick={() => {
+                            navigate(`/detail/${ld.id}`);
+                          }}
+                        >
+                          더 보기
+                        </a>
+                      </StToThePage>
+                    </p>
+                  </StFilTerCardItem>
+                </StFilTerCardBorder>
+              );
+            })}
+        </div>
+      ) : (
+        <>
+          <StNodataPage>
+            <StNoDataWho>{buttonValue}</StNoDataWho>에 해당하는 값이 없습니다.
+          </StNodataPage>
+        </>
+      )}
     </>
   );
 };
@@ -103,18 +111,4 @@ const StPostViewButton = styled.button`
   border-radius: 5px;
   margin-left: 10px;
   padding: 10px;
-`;
-
-const StFilTerCardData = styled.div`
-  margin: 15px;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StFilTerNickName = styled.p`
-  padding: auto;
-`;
-
-const StFilTerContent = styled.p`
-  padding: auto;
 `;

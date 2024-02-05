@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  StLetterCard,
-  StLetterText,
-  StLetterCardOptionButton,
-  StLetterCardSave,
-  StLetterCardCancel,
-  StLetterCardDelete,
-  StLetterCardUpdate,
-} from "style/componentStyle/DetailStyle";
+import { GlobalStyle } from "style/GlobalStyle";
+import styled from "styled-components";
 
-const Detail = () => {
+const DetailPage = () => {
   /*
     id : 다이나믹 라우팅에서 받은 id값   
     navigate :  Home페이지로 이동
@@ -69,17 +62,18 @@ const Detail = () => {
 
   return (
     <>
+      <GlobalStyle />
       {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
           return (
             <>
               <div>
-                <StLetterCard>
-                  <b>{LD.nickname}</b>
+                <GlobalStyle />
+                <b>{LD.nickname}</b>
 
-                  <b>{LD.createdAt}</b>
-                </StLetterCard>
+                <b>{LD.createdAt}</b>
+
                 {isEditing ? (
                   <StLetterText
                     value={editedContent}
@@ -121,5 +115,30 @@ const Detail = () => {
     </>
   );
 };
+export default DetailPage;
 
-export default Detail;
+const StLetterText = styled.textarea`
+  width: 1200px;
+  height: 500px;
+  margin-top: 20px;
+  margin-left: 500px;
+  border-radius: 5px;
+`;
+const StLetterCardOptionButton = styled.div`
+  margin-top: 50px;
+  margin-left: 1400px;
+`;
+const StLetterCardSave = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardCancel = styled.button`
+  border-radius: 5px;
+`;
+const StLetterCardDelete = styled.button`
+  margin-right: 10px;
+  border-radius: 5px;
+`;
+const StLetterCardUpdate = styled.button`
+  border-radius: 5px;
+`;

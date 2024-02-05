@@ -4,11 +4,8 @@ import { addZanNaBiLetter } from "store/modules/znbFanLetter";
 
 import { v4 as uuidv4 } from "uuid";
 import LetterList from "./LetterList";
-import {
-  StLetterFormOption,
-  StLetterFormOptionButton,
-} from "style/componentStyle/LetterInputFormStyle";
-import { StLetterForm } from "style/GlobalStyle";
+
+import styled from "styled-components";
 
 /*LetterForm : 편지 입력폼 컴포넌트 */
 export function LetterInputForm() {
@@ -95,26 +92,27 @@ export function LetterInputForm() {
 
   return (
     <>
-      <StLetterForm />
-      <form>
-        <input
-          type="text"
-          name="nickname"
-          value={nickname}
-          onChange={onChangeNickName}
-          placeholder="닉네임"
-          required
-        />
-        <br />
-        <textarea
-          type="text"
-          name="content"
-          value={content}
-          onChange={onChangeContent}
-          placeholder="내용"
-          required
-        />
-        <br />
+      <StLetterForm>
+        <StLetterInputDisplay>
+          <StLetterFormInput
+            type="text"
+            name="nickname"
+            value={nickname}
+            onChange={onChangeNickName}
+            placeholder="닉네임"
+            required
+          />
+          <br />
+          <StLetterFormTextArea
+            type="text"
+            name="content"
+            value={content}
+            onChange={onChangeContent}
+            placeholder="내용"
+            required
+          />
+          <br />
+        </StLetterInputDisplay>
 
         <StLetterFormOption>
           <select
@@ -131,9 +129,54 @@ export function LetterInputForm() {
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
-      </form>
+      </StLetterForm>
 
       <LetterList />
     </>
   );
 }
+
+// LetterInputForm 컴포넌트
+const StLetterForm = styled.form`
+  margin: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StLetterInputDisplay = styled.div`
+  margin: auto;
+`;
+
+const StLetterFormInput = styled.input`
+  padding: 5px;
+  width: 900px;
+`;
+
+const StLetterFormTextArea = styled.textarea`
+  padding: 5px;
+  margin-top: 10px;
+  width: 900px;
+  height: 400px;
+`;
+
+const StLetterFormOption = styled.div`
+  margin-left: 750px;
+  margin-top: 10px;
+`;
+
+const StLetterFormOptionButton = styled.button`
+  margin: 10px;
+  padding: 10px;
+  border-color: #0b69d4;
+  background-color: #0b69d4;
+  border-radius: 10px;
+  color: white;
+
+  &:hover {
+    background-color: #0680c2;
+    border-color: #0680c2;
+    cursor: pointer;
+  }
+`;

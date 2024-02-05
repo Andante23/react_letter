@@ -1,17 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  StFilTerCardBorder,
-  StFilTerCardItem,
-  StFilTerCardItemHeroImage,
-  StToThePage,
-  StPostView,
-  StFilTerCardData,
-  StFilTerContent,
-  StFilTerNickName,
-  StPostViewButton,
-} from "style/componentStyle/LetterListStyle";
+import styled from "styled-components";
 
 /* LetterList : 선택한 아티스트에 따라 리스트를 보여주는 컴포넌트  */
 const LetterList = () => {
@@ -24,6 +14,7 @@ const LetterList = () => {
   const [buttonValue, setButtonValue] = useState("최정훈");
   const navigate = useNavigate();
   const allZnbData = useSelector((state) => state.zaNaBiLetter);
+
   const onClickArtistViewPostButton = (selectValue) => {
     setButtonValue(selectValue);
   };
@@ -79,3 +70,52 @@ const LetterList = () => {
 };
 
 export default LetterList;
+
+const StFilTerCardBorder = styled.div`
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  margin: 10px;
+`;
+
+const StFilTerCardItem = styled.figure`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+
+const StFilTerCardItemHeroImage = styled.img`
+  margin-left: 10px;
+  margin-right: 12px;
+  border-radius: 10px;
+  width: 100px;
+`;
+
+const StToThePage = styled.p`
+  margin-left: 87.5rem;
+  cursor: pointer;
+`;
+
+const StPostView = styled.div`
+  margin: auto;
+`;
+
+const StPostViewButton = styled.button`
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 10px;
+`;
+
+const StFilTerCardData = styled.div`
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StFilTerNickName = styled.p`
+  padding: auto;
+`;
+
+const StFilTerContent = styled.p`
+  padding: auto;
+`;

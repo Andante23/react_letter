@@ -77,29 +77,30 @@ export function LetterInputForm({
   return (
     <>
       <StLetterForm>
-        <input
-          type="text"
-          name="nickname"
-          value={nickName}
-          onChange={(e) => {
-            setNickName(e.target.value);
-          }}
-          placeholder="닉네임"
-          required
-        />
-        <br />
-        <textarea
-          type="text"
-          name="content"
-          value={content}
-          onChange={(e) => {
-            setContent(e.target.value);
-          }}
-          placeholder="내용"
-          required
-        />
-        <br />
-
+        <StLetterInputDisplay>
+          <StLetterFormInput
+            type="text"
+            name="nickname"
+            value={nickName}
+            onChange={(e) => {
+              setNickName(e.target.value);
+            }}
+            placeholder="닉네임"
+            required
+          />
+          <br />
+          <StLetterFormTextArea
+            type="text"
+            name="content"
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value);
+            }}
+            placeholder="내용"
+            required
+          />
+          <br />
+        </StLetterInputDisplay>
         <StLetterFormOption>
           <select name="zanabi" onChange={onChangeSelect}>
             <option value={"최정훈"}>최정훈</option>
@@ -115,12 +116,34 @@ export function LetterInputForm({
   );
 }
 
+// LetterInputForm 컴포넌트
 const StLetterForm = styled.form`
-  margin-left: 700px;
+  margin: 40px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StLetterInputDisplay = styled.div`
+  margin: auto;
+`;
+
+const StLetterFormInput = styled.input`
+  padding: 5px;
+  width: 900px;
+`;
+
+const StLetterFormTextArea = styled.textarea`
+  padding: 5px;
+  margin-top: 10px;
+  width: 900px;
+  height: 400px;
 `;
 
 const StLetterFormOption = styled.div`
-  margin-left: 300px;
+  margin-left: 750px;
+  margin-top: 10px;
 `;
 
 const StLetterFormOptionButton = styled.button`
@@ -136,39 +159,4 @@ const StLetterFormOptionButton = styled.button`
     border-color: #0680c2;
     cursor: pointer;
   }
-`;
-
-const StPostView = styled.div`
-  margin-left: 1600px;
-  margin-top: 40px;
-`;
-
-const StPostViewButton = styled.button`
-  border-radius: 10px;
-  margin-left: 10px;
-`;
-const StFilTerCardBorder = styled.div`
-  background-color: black;
-  border-radius: 5px;
-  color: white;
-  margin: 10px;
-`;
-
-const StFilTerCardItem = styled.figure`
-  display: flex;
-  padding: 10px;
-  align-items: center;
-`;
-
-const StFilTerCardItemHeroImage = styled.img`
-  margin-left: 10px;
-  margin-right: 12px;
-  border-radius: 10px;
-  width: 100px;
-`;
-
-const StToThePage = styled.p`
-  margin-left: 1500px;
-  margin-bottom: 10px;
-  cursor: pointer;
 `;

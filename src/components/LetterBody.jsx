@@ -47,7 +47,7 @@ export const LetterBody = ({
 
               <p>
                 <p>{lD.nickname}</p>
-                <p>{lD.content}</p>
+                <p>{lD.content.slice(0, 50) + "..."}</p>
                 <StToThePage>
                   <a
                     onClick={() => {

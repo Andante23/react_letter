@@ -21,11 +21,11 @@ export function ArtistsPostViewButton({ setButtonValue }) {
 }
 
 const StPostView = styled.div`
-  margin-left: 1600px;
-  margin-top: 40px;
+  margin: auto;
 `;
 
 const StPostViewButton = styled.button`
-  border-radius: 10px;
+  border-radius: 5px;
   margin-left: 10px;
+  padding: 10px;
 `;

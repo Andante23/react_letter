@@ -1,13 +1,15 @@
-import { AuthContext } from "context/LetterDataContext";
+import { FanLetterContext } from "context/LetterDataContext";
 import React from "react";
 import Router from "shared/Router";
-
+import { GlobalStyle } from "style/GlobalStyle";
 function App() {
   return (
     <>
-      <AuthContext>
+      <FanLetterContext>
+        {/* reset.css의 내용을 GlobalStyle 변수안에 저장합니다..... */}
+        <GlobalStyle />
         <Router />
-      </AuthContext>
+      </FanLetterContext>
     </>
   );
 }

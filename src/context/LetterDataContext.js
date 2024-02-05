@@ -1,8 +1,9 @@
 import { createContext, useState } from "react";
 import dummy from "assets/fakedata.json";
-export const ThemeContext = createContext(null);
 
-export const AuthContext = (props) => {
+export const FanLetterDataContext = createContext(null);
+
+export const FanLetterContext = (props) => {
   // 값이 변동이 있는 변수들은  useState로 보관하기
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
@@ -11,7 +12,7 @@ export const AuthContext = (props) => {
   const [buttonValue, setButtonValue] = useState("최정훈");
 
   return (
-    <ThemeContext.Provider
+    <FanLetterDataContext.Provider
       value={{
         nickName,
         setNickName,
@@ -25,7 +26,11 @@ export const AuthContext = (props) => {
         setButtonValue,
       }}
     >
+      {/* 
+          왜 props.children를  사용하는가? 
+          FanLetterDataContext 컴포넌트가 감싸고 있는 모든 자식 컴포넌트에게 해당 컨텍스트 값 전달 
+      */}
       {props.children}
-    </ThemeContext.Provider>
+    </FanLetterDataContext.Provider>
   );
 };

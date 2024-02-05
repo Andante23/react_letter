@@ -1,41 +1,30 @@
-import { StLetterForm } from "style/GlobalStyle";
 import React from "react";
-
-import {
-  StLetterFormOption,
-  StLetterFormOptionButton,
-} from "style/componentStyle/LetterInputFormStyle";
+import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { ThemeContext } from "context/LetterDataContext";
+import { FanLetterDataContext } from "context/LetterDataContext";
 import { useContext } from "react";
 
 export function LetterInputForm() {
-  const data = useContext(ThemeContext);
+  const data = useContext(FanLetterDataContext);
 
-  /**
-   * 입력 nickName 값 저장하는 함수
-   */
+  /*
+   onChangeNickName :   입력 nickName 값 저장하는 함수
+   onChangeContent  : 입력 content 값 저장하는 함수
+   onChangeSelect : selectBox에서 선택한 option 값을 저장하는 함수
+   onSubmitInputForm :  입력폼을 제출하는 함수 
+  */
+
   const onChangeNickName = (event) => {
     data.setNickName(event.target.value);
   };
 
-  /**
-   * 입력 content 값 저장하는 함수
-   */
   const onChangeContent = (event) => {
     data.setContent(event.target.value);
   };
 
-  /**
-   * selectBox에서 선택한 option 값을 저장하는 함수
-   */
   const onChangeSelect = (event) => {
     data.setSelectorValue(event.target.value);
   };
-
-  /**
-   *  입력폼을 제출하는 함수
-   */
 
   const onSubmitInputForm = (event) => {
     event.preventDefault();
@@ -89,8 +78,7 @@ export function LetterInputForm() {
 
   return (
     <>
-      <StLetterForm />
-      <form onSubmit={onSubmitInputForm}>
+      <StLetterForm onSubmit={onSubmitInputForm}>
         <input
           type="text"
           name="nickname"
@@ -121,7 +109,32 @@ export function LetterInputForm() {
             추가하기
           </StLetterFormOptionButton>
         </StLetterFormOption>
-      </form>
+      </StLetterForm>
     </>
   );
 }
+
+// styled 컴포넌트
+
+const StLetterForm = styled.form`
+  margin-left: 700px;
+`;
+
+const StLetterFormOption = styled.div`
+  margin-left: 300px;
+`;
+
+const StLetterFormOptionButton = styled.button`
+  margin: 10px;
+  padding: 10px;
+  border-color: #0b69d4;
+  background-color: #0b69d4;
+  border-radius: 10px;
+  color: white;
+
+  &:hover {
+    background-color: #0680c2;
+    border-color: #0680c2;
+    cursor: pointer;
+  }
+`;

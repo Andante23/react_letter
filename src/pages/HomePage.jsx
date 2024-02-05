@@ -1,7 +1,7 @@
 import { LetterHeader } from "components/LetterHeader";
 import { LetterBody } from "components/LetterBody";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <>
       <LetterHeader></LetterHeader>
@@ -10,4 +10,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

@@ -1,29 +1,19 @@
 import { useNavigate } from "react-router-dom";
-
-import {
-  StFilTerCardBorder,
-  StFilTerCardItem,
-  StFilTerCardItemHeroImage,
-  StToThePage,
-  StPostView,
-  StFilTerCardData,
-  StFilTerContent,
-  StFilTerNickName,
-  StPostViewButton,
-} from "style/componentStyle/LetterListStyle";
-
-import { ThemeContext } from "context/LetterDataContext";
+import styled from "styled-components";
+import { FanLetterDataContext } from "context/LetterDataContext";
 import { useContext } from "react";
 import { LetterInputForm } from "./LetterInputForm";
 
 export const LetterBody = () => {
   const navigate = useNavigate();
 
-  const data = useContext(ThemeContext);
-  const { setSelectorValue, letterData, buttonValue } = data;
+  const data = useContext(FanLetterDataContext);
 
-  const onClickArtistViewPostButton = (value = "") => {
-    setSelectorValue(value);
+  const { setButtonValue, letterData, buttonValue } = data;
+
+  // 아티스트별 게시물을 보여주는 로직
+  const handleArtistPostViewClick = (value) => {
+    setButtonValue(value);
   };
 
   return (
@@ -31,17 +21,18 @@ export const LetterBody = () => {
       <LetterInputForm />
 
       <StPostView>
-        <StPostViewButton onClick={() => onClickArtistViewPostButton("최정훈")}>
+        <StPostViewButton onClick={() => handleArtistPostViewClick("최정훈")}>
           최정훈
         </StPostViewButton>
-        <StPostViewButton onClick={() => onClickArtistViewPostButton("김도형")}>
+        <StPostViewButton onClick={() => handleArtistPostViewClick("김도형")}>
           김도형
         </StPostViewButton>
       </StPostView>
 
       {/* 
-          1. 모든 잔나비 팬 레터데이터에서 내가 선택한 버튼값에 따른  새 배열 생성
-          2. map을 통해서 반복문 돌리기!!!!!
+         예시 :  버튼 값이 만약에  김도형이라면 
+
+                 김도형에 맞는 게시물을 보여드립시다. 
      */}
 
       {letterData
@@ -54,16 +45,17 @@ export const LetterBody = () => {
               <StFilTerCardData>
                 <StFilTerNickName>{lD.nickname}</StFilTerNickName>
                 <StFilTerContent>
-                  {/* 내용이 50자가 넘으면 그 부분을 ...로 바꾸기 */}
+                  {/*  긴 문자열 일부 생략 처리  */}
                   {lD.content.slice(0, 50) + "..."}
                 </StFilTerContent>
 
                 {/* 
-                 
-                리액트 라우터 돔 라이브러리의 메서드인 navigate를 이용해서
-                detail 페이지로  다이나믹하게 이동하기 
-               
-               */}
+                    특정 id값을 가진 상세정보 페이지로 이동 
+                  
+                    예시 : 
+                          id가 .... 인 사람의 상세정보페이지로 이동한다고 보시면 됩니다.  
+                
+                */}
                 <StToThePage
                   onClick={() => {
                     navigate(`/detail/${lD.id}`);
@@ -78,3 +70,52 @@ export const LetterBody = () => {
     </>
   );
 };
+
+const StFilTerCardBorder = styled.div`
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  margin: 10px;
+`;
+
+const StFilTerCardItem = styled.figure`
+  display: flex;
+  padding: 10px;
+  align-items: center;
+`;
+
+const StFilTerCardItemHeroImage = styled.img`
+  margin-left: 10px;
+  margin-right: 12px;
+  border-radius: 10px;
+  width: 100px;
+`;
+
+const StToThePage = styled.p`
+  margin-left: 87.5rem;
+  cursor: pointer;
+`;
+
+const StPostView = styled.div`
+  margin: auto;
+`;
+
+const StPostViewButton = styled.button`
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 10px;
+`;
+
+const StFilTerCardData = styled.div`
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StFilTerNickName = styled.p`
+  padding: auto;
+`;
+
+const StFilTerContent = styled.p`
+  padding: auto;
+`;

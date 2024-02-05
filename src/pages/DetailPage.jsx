@@ -1,24 +1,36 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ThemeContext } from "context/LetterDataContext";
+import { FanLetterDataContext } from "context/LetterDataContext";
 import { useContext } from "react";
 
-const Detail = () => {
+const DetailPage = () => {
+  /*  
+    id : 다이나믹 라우팅에서 받은 id값   
+    navigate :  Home페이지로 이동
+    isEditing : 수정모드 활성화 / 비활성화 
+    editedContent : 수정된는 글 말하는 거임 
+  */
   const { id } = useParams();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState();
 
-  const data = useContext(ThemeContext);
+  // context에서 받아온데이터인 data를  비구조화 할당을 이용해서 필요한 데이터만 가져오기
+  const data = useContext(FanLetterDataContext);
   const { setLetterData, letterData } = data;
 
-  // 에디터를  활성화 시켜주는 함수입니다.
+  /*
+   handleUpdate : 글 수정하는 함수
+   handleDelete : 글 삭제하는 함수
+   handleEdit : 수정모드 활성화
+   handleCancelEdit : 수정모드 비활성화 
+ */
   const handleEdit = () => {
     setIsEditing(true);
   };
 
-  const handleSave = () => {
+  const handleUpdate = () => {
     //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
     //  까먹지말고  전체 데이터를 다루는  LetterData에다가 알려줍시다!!
 
@@ -40,7 +52,7 @@ const Detail = () => {
     setIsEditing(false);
   };
 
-  const deleteButton = () => {
+  const handleDelete = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");
     if (resultDelete) {
       setLetterData((prevLetterData) =>
@@ -56,6 +68,7 @@ const Detail = () => {
 
   return (
     <>
+      {/* 특정사람의 id에 따른 상세 팬레터 정보를 보여주는 로직 */}
       {letterData
         .filter((lD) => lD.id === id)
         .map((LD) => {
@@ -83,7 +96,7 @@ const Detail = () => {
                 <StLetterCardOptionButton>
                   {isEditing ? (
                     <>
-                      <StLetterCardSave onClick={handleSave}>
+                      <StLetterCardSave onClick={handleUpdate}>
                         저장하기
                       </StLetterCardSave>
                       <StLetterCardCancel onClick={handleCancelEdit}>
@@ -92,7 +105,7 @@ const Detail = () => {
                     </>
                   ) : (
                     <>
-                      <StLetterCardDelete onClick={deleteButton}>
+                      <StLetterCardDelete onClick={handleDelete}>
                         삭제하기
                       </StLetterCardDelete>
                       <StLetterCardUpdate onClick={handleEdit}>
@@ -108,6 +121,8 @@ const Detail = () => {
     </>
   );
 };
+
+export default DetailPage;
 
 const StLetterCard = styled.p`
   display: flex;
@@ -141,5 +156,3 @@ const StLetterCardDelete = styled.button`
 const StLetterCardUpdate = styled.button`
   border-radius: 5px;
 `;
-
-export default Detail;

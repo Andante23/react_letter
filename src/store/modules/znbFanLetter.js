@@ -1,4 +1,4 @@
-import { letterData } from "assets/data";
+import letterData from "assets/fakedata.json";
 
 // 리듀서 함수에 들어가는 초기값
 const initialState = letterData;

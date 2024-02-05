@@ -14,17 +14,11 @@ export function LetterInputForm() {
    onSubmitInputForm :  입력폼을 제출하는 함수 
   */
 
-  const onChangeNickName = (event) => {
-    data.setNickName(event.target.value);
-  };
+  const onChangeNickName = (event) => data.setNickName(event.target.value);
 
-  const onChangeContent = (event) => {
-    data.setContent(event.target.value);
-  };
+  const onChangeContent = (event) => data.setContent(event.target.value);
 
-  const onChangeSelect = (event) => {
-    data.setSelectorValue(event.target.value);
-  };
+  const onChangeSelect = (event) => data.setSelectorValue(event.target.value);
 
   const onSubmitInputForm = (event) => {
     event.preventDefault();

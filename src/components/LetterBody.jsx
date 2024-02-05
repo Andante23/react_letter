@@ -12,9 +12,7 @@ export const LetterBody = () => {
   const { setButtonValue, letterData, buttonValue } = data;
 
   // 아티스트별 게시물을 보여주는 로직
-  const handleArtistPostViewClick = (value) => {
-    setButtonValue(value);
-  };
+  const handleArtistPostViewClick = (value) => setButtonValue(value);
 
   return (
     <>

@@ -26,9 +26,7 @@ const DetailPage = () => {
    handleEdit : 수정모드 활성화
    handleCancelEdit : 수정모드 비활성화 
  */
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  const handleEdit = () => setIsEditing(true);
 
   const handleUpdate = () => {
     //  23처럼 setEditedContent에 다가만 알리면 리액트는  무엇이 바뀌었는가 ???만 띄움니다.
@@ -48,9 +46,7 @@ const DetailPage = () => {
     navigate("/");
   };
 
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
+  const handleCancelEdit = () => setIsEditing(false);
 
   const handleDelete = () => {
     const resultDelete = window.confirm("삭제하시겠습니까?");

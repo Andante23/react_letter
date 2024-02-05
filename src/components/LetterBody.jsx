@@ -65,7 +65,9 @@ export const LetterBody = () => {
             })}
         </div>
       ) : (
-        <>{buttonValue}에 해당하는 값이 없습니다. </>
+        <StNodataPage>
+          <StNoDataWho>{buttonValue}</StNoDataWho>에 해당하는 값이 없습니다.
+        </StNodataPage>
       )}
     </>
   );
@@ -106,16 +108,14 @@ const StPostViewButton = styled.button`
   padding: 10px;
 `;
 
-const StFilTerCardData = styled.div`
-  margin: 15px;
-  display: flex;
-  flex-direction: column;
+const StNoDataWho = styled.b`
+  font-weight: 900;
+  color: red;
 `;
 
-const StFilTerNickName = styled.p`
-  padding: auto;
-`;
-
-const StFilTerContent = styled.p`
-  padding: auto;
+const StNodataPage = styled.p`
+  margin-top: 100px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 30px;
 `;

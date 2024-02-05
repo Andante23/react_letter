@@ -38,29 +38,44 @@ export const LetterBody = ({
         setButtonValue={setButtonValue}
       />
 
-      {letterData
-        .filter((letter) => letter.writedTo === buttonValue)
-        .map((lD) => (
-          <StFilTerCardBorder key={lD.id}>
-            <StFilTerCardItem>
-              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+      {letterData.filter((ld) => ld.writedTo === buttonValue).length !== 0 ? (
+        <div>
+          {letterData
+            .filter((ld) => ld.writedTo === buttonValue)
+            .map((ld) => {
+              return (
+                <StFilTerCardBorder>
+                  <StFilTerCardItem>
+                    <StFilTerCardItemHeroImage
+                      src={ld.avatar}
+                      alt="대체 이미지"
+                    />
 
-              <p>
-                <p>{lD.nickname}</p>
-                <p>{lD.content.slice(0, 50) + "..."}</p>
-                <StToThePage>
-                  <a
-                    onClick={() => {
-                      navigate(`/detail/${lD.id}`);
-                    }}
-                  >
-                    더 보기
-                  </a>
-                </StToThePage>
-              </p>
-            </StFilTerCardItem>
-          </StFilTerCardBorder>
-        ))}
+                    <p>
+                      <p>{ld.nickname}</p>
+                      <p>{ld.content.slice(0, 50) + "..."}</p>
+                      <StToThePage>
+                        <a
+                          onClick={() => {
+                            navigate(`/detail/${ld.id}`);
+                          }}
+                        >
+                          더 보기
+                        </a>
+                      </StToThePage>
+                    </p>
+                  </StFilTerCardItem>
+                </StFilTerCardBorder>
+              );
+            })}
+        </div>
+      ) : (
+        <>
+          <StNodataPage>
+            <StNoDataWho>{buttonValue}</StNoDataWho>에 해당하는 값이 없습니다.
+          </StNodataPage>
+        </>
+      )}
     </>
   );
 };
@@ -91,4 +106,16 @@ const StToThePage = styled.p`
   margin-left: 1500px;
   margin-bottom: 10px;
   cursor: pointer;
+`;
+
+const StNoDataWho = styled.b`
+  font-weight: 900;
+  color: red;
+`;
+
+const StNodataPage = styled.p`
+  margin-top: 100px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 30px;
 `;

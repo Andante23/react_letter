@@ -17,7 +17,6 @@ export const LetterBody = () => {
   return (
     <>
       <LetterInputForm />
-
       <StPostView>
         <StPostViewButton onClick={() => handleArtistPostViewClick("최정훈")}>
           최정훈
@@ -27,44 +26,47 @@ export const LetterBody = () => {
         </StPostViewButton>
       </StPostView>
 
-      {/* 
-         예시 :  버튼 값이 만약에  김도형이라면 
-
-                 김도형에 맞는 게시물을 보여드립시다. 
+      {/* 필터링된 데이터의 길이 !== 0 이 아니라면 
+                             데이터를  표현하고 
+                             아니면 
+                                buttonValue에 해당하는 값이 없습니다 
+     
      */}
 
-      {letterData
-        .filter((letter) => letter.writedTo === buttonValue)
-        .map((lD) => (
-          <StFilTerCardBorder key={lD.id}>
-            <StFilTerCardItem>
-              <StFilTerCardItemHeroImage src={lD.avatar} alt="대체 이미지" />
+      {letterData.filter((ld) => ld.writedTo === buttonValue).length !== 0 ? (
+        <div>
+          {letterData
+            .filter((ld) => ld.writedTo === buttonValue)
+            .map((ld) => {
+              return (
+                <StFilTerCardBorder>
+                  <StFilTerCardItem>
+                    <StFilTerCardItemHeroImage
+                      src={ld.avatar}
+                      alt="대체 이미지"
+                    />
 
-              <StFilTerCardData>
-                <StFilTerNickName>{lD.nickname}</StFilTerNickName>
-                <StFilTerContent>
-                  {/*  긴 문자열 일부 생략 처리  */}
-                  {lD.content.slice(0, 50) + "..."}
-                </StFilTerContent>
-
-                {/* 
-                    특정 id값을 가진 상세정보 페이지로 이동 
-                  
-                    예시 : 
-                          id가 .... 인 사람의 상세정보페이지로 이동한다고 보시면 됩니다.  
-                
-                */}
-                <StToThePage
-                  onClick={() => {
-                    navigate(`/detail/${lD.id}`);
-                  }}
-                >
-                  더 보기
-                </StToThePage>
-              </StFilTerCardData>
-            </StFilTerCardItem>
-          </StFilTerCardBorder>
-        ))}
+                    <p>
+                      <p>{ld.nickname}</p>
+                      <p>{ld.content.slice(0, 50) + "..."}</p>
+                      <StToThePage>
+                        <a
+                          onClick={() => {
+                            navigate(`/detail/${ld.id}`);
+                          }}
+                        >
+                          더 보기
+                        </a>
+                      </StToThePage>
+                    </p>
+                  </StFilTerCardItem>
+                </StFilTerCardBorder>
+              );
+            })}
+        </div>
+      ) : (
+        <>{buttonValue}에 해당하는 값이 없습니다. </>
+      )}
     </>
   );
 };

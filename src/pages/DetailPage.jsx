@@ -66,15 +66,15 @@ const DetailPage = () => {
     <>
       {/* 특정사람의 id에 따른 상세 팬레터 정보를 보여주는 로직 */}
       {letterData
-        .filter((lD) => lD.id === id)
-        .map((LD) => {
+        .filter((letter) => letter.id === id)
+        .map((letter) => {
           return (
             <>
               <div>
                 <StLetterCard>
-                  <b>{LD.nickname}</b>
+                  <b>{letter.nickname}</b>
 
-                  <b>{LD.createdAt}</b>
+                  <b>{letter.createdAt}</b>
                 </StLetterCard>
                 {isEditing ? (
                   <StLetterText
@@ -83,10 +83,10 @@ const DetailPage = () => {
                       setEditedContent(e.target.value);
                     }}
                   >
-                    {LD.content}
+                    {letter.content}
                   </StLetterText>
                 ) : (
-                  <p>{LD.content}</p>
+                  <p>{letter.content}</p>
                 )}
 
                 <StLetterCardOptionButton>

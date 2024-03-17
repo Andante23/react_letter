@@ -38,26 +38,27 @@ export const LetterBody = ({
         setButtonValue={setButtonValue}
       />
 
-      {letterData.filter((ld) => ld.writedTo === buttonValue).length !== 0 ? (
+      {letterData.filter((letter) => letter.writedTo === buttonValue).length !==
+      0 ? (
         <div>
           {letterData
-            .filter((ld) => ld.writedTo === buttonValue)
-            .map((ld) => {
+            .filter((letter) => letter.writedTo === buttonValue)
+            .map((letter) => {
               return (
                 <StFilTerCardBorder>
                   <StFilTerCardItem>
                     <StFilTerCardItemHeroImage
-                      src={ld.avatar}
+                      src={letter.avatar}
                       alt="대체 이미지"
                     />
 
                     <p>
-                      <p>{ld.nickname}</p>
-                      <p>{ld.content.slice(0, 50) + "..."}</p>
+                      <p>{letter.nickname}</p>
+                      <p>{letter.content.slice(0, 50) + "..."}</p>
                       <StToThePage>
                         <a
                           onClick={() => {
-                            navigate(`/detail/${ld.id}`);
+                            navigate(`/detail/${letter.id}`);
                           }}
                         >
                           더 보기

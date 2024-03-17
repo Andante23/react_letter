@@ -62,15 +62,15 @@ const DetailPage = ({ letterData, setLetterData }) => {
   return (
     <>
       {letterData
-        .filter((lD) => lD.id === id)
-        .map((LD) => {
+        .filter((letter) => letter.id === id)
+        .map((letter) => {
           return (
             <>
               <div>
                 <StLetterCard>
-                  <b>{LD.nickname}</b>
+                  <b>{letter.nickname}</b>
 
-                  <b>{LD.createdAt}</b>
+                  <b>{letter.createdAt}</b>
                 </StLetterCard>
                 {isEditing ? (
                   <StLetterText
@@ -79,10 +79,10 @@ const DetailPage = ({ letterData, setLetterData }) => {
                       setEditedContent(e.target.value);
                     }}
                   >
-                    {LD.content}
+                    {letter.content}
                   </StLetterText>
                 ) : (
-                  <StLetterText disabled>{LD.content}</StLetterText>
+                  <StLetterText disabled>{letter.content}</StLetterText>
                 )}
 
                 <StLetterCardOptionButton>

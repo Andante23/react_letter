@@ -1,7 +1,7 @@
 import { FanLetterContext } from "context/LetterDataContext";
 import React from "react";
 import Router from "shared/Router";
-import { GlobalStyle } from "style/GlobalStyle";
+import { GlobalStyle } from "Style/GlobalStyle";
 function App() {
   return (
     <>

@@ -64,15 +64,15 @@ const DetailPage = () => {
     <>
       <GlobalStyle />
       {letterData
-        .filter((lD) => lD.id === id)
-        .map((LD) => {
+        .filter((letter) => letter.id === id)
+        .map((letter) => {
           return (
             <>
               <div>
                 <GlobalStyle />
-                <b>{LD.nickname}</b>
+                <b>{letter.nickname}</b>
 
-                <b>{LD.createdAt}</b>
+                <b>{letter.createdAt}</b>
 
                 {isEditing ? (
                   <StLetterText
@@ -81,10 +81,10 @@ const DetailPage = () => {
                       setEditedContent(e.target.value);
                     }}
                   >
-                    {LD.content}
+                    {letter.content}
                   </StLetterText>
                 ) : (
-                  <p>{LD.content}</p>
+                  <p>{letter.content}</p>
                 )}
 
                 <StLetterCardOptionButton>
